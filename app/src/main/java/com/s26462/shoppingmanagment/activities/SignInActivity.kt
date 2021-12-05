@@ -14,6 +14,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import com.s26462.shoppingmanagment.R
+import com.s26462.shoppingmanagment.models.User
 import kotlinx.android.synthetic.main.activity_sign_in.*
 
 class SignInActivity : BaseActivity() {
@@ -36,14 +37,17 @@ class SignInActivity : BaseActivity() {
         setupActionBar()
 
         btn_sign_in.setOnClickListener {
-//          sprawdzam - pewnie nadmiarowo, ale zgodnie z dokumentacją, czy użytkownik nie jest zalogowany
-            val currentUser = auth.currentUser
-            if(currentUser == null){
-                signInRegisteredUser()
-            }
+            signInRegisteredUser()
             }
 
     }
+
+    fun signInSuccess(user: User) {
+        hideProgressDialog()
+        startActivity(Intent(this,MainActivity::class.java))
+        finish()
+    }
+
 //pasek aktywności
     private fun setupActionBar() {
         setSupportActionBar(toolbar_sign_in_activity)

@@ -9,6 +9,8 @@ import android.widget.Toast
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.s26462.shoppingmanagment.R
+import com.s26462.shoppingmanagment.firebase.FirestoreClass
+import com.s26462.shoppingmanagment.models.User
 import kotlinx.android.synthetic.main.activity_sign_up.*
 
 class SignUpActivity : BaseActivity() {
@@ -29,6 +31,14 @@ class SignUpActivity : BaseActivity() {
 
     }
 
+    fun userRegisteredSuccess() {
+        Toast.makeText(this,"Twoje konto zostało utworzone.",Toast.LENGTH_LONG)
+            .show()
+        hideProgressDialog()
+        FirebaseAuth.getInstance().signOut()
+        finish()
+    }
+//pasek statusu
     private fun setupActionBar() {
         setSupportActionBar(toolbar_sign_up_activity)
 
@@ -53,15 +63,12 @@ class SignUpActivity : BaseActivity() {
             showProgressDialog(resources.getString(R.string.please_wait))
             FirebaseAuth.getInstance()
                 .createUserWithEmailAndPassword(email,password).addOnCompleteListener { task ->
-                    hideProgressDialog()
                     if (task.isSuccessful) {
                         val firebaseUser: FirebaseUser = task.result!!.user!!
 //                        pobranie adresu email
                         val registeredEmail  = firebaseUser.email!!
-                        Toast.makeText(this,"$name Twoje konto zostało utworzone.",Toast.LENGTH_LONG)
-                            .show()
-                        FirebaseAuth.getInstance().signOut()
-                        finish()
+                        val user = User(firebaseUser.uid,name,email,password)
+                        FirestoreClass().registerUser(this,user)
                     } else{
                         Toast.makeText(this,"Rejestracja nie powiodła się",Toast.LENGTH_SHORT)
                             .show()

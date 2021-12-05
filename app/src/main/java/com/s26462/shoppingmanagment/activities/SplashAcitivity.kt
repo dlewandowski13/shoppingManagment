@@ -10,6 +10,7 @@ import android.os.Looper
 import android.view.WindowInsets
 import android.view.WindowManager
 import com.s26462.shoppingmanagment.R
+import com.s26462.shoppingmanagment.firebase.FirestoreClass
 import kotlinx.android.synthetic.main.activity_splash_acitivity.*
 
 class SplashAcitivity : AppCompatActivity() {
@@ -30,8 +31,15 @@ class SplashAcitivity : AppCompatActivity() {
         val typeFace : Typeface = Typeface.createFromAsset(assets,"carbon bl.ttf")
         tv_app_name.typeface = typeFace
 
+
+//wyświetlanie okna powitania i przekierowanie na właściwy Activity
         Handler(Looper.getMainLooper()).postDelayed({
-            startActivity(Intent(this, IntroActivity::class.java))
+            var currentUserID = FirestoreClass().getCurrentUserId()
+            if(currentUserID.isNotEmpty()){
+                startActivity(Intent(this,MainActivity::class.java))
+            }else {
+                startActivity(Intent(this, IntroActivity::class.java))
+            }
             finish()
         }, 2500)
     }
