@@ -1,0 +1,15 @@
+<resources>
+    <string name="app_name">Shopping Managment</string>
+
+    <string name="image_contentDescription">image</string>
+    <string name="lets_get_started_text">Zaczynamy!</string>
+    <string name="intro_text_description">Twórz i współdziel listy zakupów.</string>
+    <string name="sign_in">Zaloguj się</string>
+    <string name="sign_up">Zarejestruj się</string>
+
+    <string name="sign_up_description_text">Podaj nazwę, email oraz hasło w celu rejestracji.</string>
+    <string name="name">Nazwa</string>
+    <string name="password">Hasło</string>
+    <string name="email">Email</string>
+    <string name="sign_in_description_text">Podaj email i hasło żeby się zalogować</string>
+</resources>
