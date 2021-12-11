@@ -72,14 +72,14 @@ class SignInActivity : BaseActivity() {
                 .addOnCompleteListener(this) { task ->
                     hideProgressDialog()
                     if (task.isSuccessful) {
-                        // Sign in success, update UI with the signed-in user's information
+                        // udało się zalogować
                         Log.d("SIGN IN", "signInWithEmail:success")
                         val user = auth.currentUser
                         startActivity(Intent(this,MainActivity::class.java))
                     } else {
-                        // If sign in fails, display a message to the user.
+                        // błąd logowania
                         Log.w("SIGN IN", "signInWithEmail:failure", task.exception)
-                        Toast.makeText(baseContext, "Authentication failed.",
+                        Toast.makeText(baseContext, "Autoryzacja nie powiodła się.",
                             Toast.LENGTH_SHORT).show()
 //                        updateUI(null)
                     }

@@ -18,4 +18,14 @@
 
     <string name="nav_my_profile">Mój profil</string>
     <string name="nav_sign_out">Wyloguj się</string>
+
+    <string name="mobile">Telefon</string>
+    <string name="update">AKTUALIZUJ</string>
+    <string name="my_profile_title">Mój profil</string>
+
+    <string name="create_spnglist_title">Uwórz nową listę zakupów</string>
+    <string name="create">UTWÓRZ</string>
+    <string name="spnglist_name">Nowa lista zakupów</string>
+
+    <string name="no_spnglists_are_available">Nie dodałeś jeszcze żadnej listy zakupów.</string>
 </resources>

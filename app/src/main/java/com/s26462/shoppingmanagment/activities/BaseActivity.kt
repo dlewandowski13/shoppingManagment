@@ -24,7 +24,7 @@ open class BaseActivity : AppCompatActivity() {
         setContentView(R.layout.activity_base)
     }
 
-    //wyświetlenie paska postępu
+//wyświetlenie okna postępu
     fun showProgressDialog(text: String) {
         mProgressDialog = Dialog(this)
 
@@ -35,7 +35,7 @@ open class BaseActivity : AppCompatActivity() {
         mProgressDialog.show()
     }
 
-    //ukrycie paska postępu
+    //ukrycie okna postępu
     fun hideProgressDialog() {
         mProgressDialog.dismiss()
     }
