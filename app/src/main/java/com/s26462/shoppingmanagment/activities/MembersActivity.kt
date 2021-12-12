@@ -7,12 +7,12 @@ import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.projemanag.adapters.MemberListItemsAdapter
 import com.s26462.shoppingmanagment.R
 import com.s26462.shoppingmanagment.firebase.FirestoreClass
 import com.s26462.shoppingmanagment.models.ShoppingList
 import com.s26462.shoppingmanagment.models.User
 import com.s26462.shoppingmanagment.utils.Constants
+import com.shoppingmanagment.adapters.MemberListItemsAdapter
 import kotlinx.android.synthetic.main.activity_members.*
 import kotlinx.android.synthetic.main.activity_my_profile.*
 import kotlinx.android.synthetic.main.dialog_search_member.*

@@ -10,10 +10,12 @@ import android.widget.LinearLayout
 import android.widget.TimePicker
 import android.widget.Toast
 import androidx.core.view.setMargins
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.s26462.shoppingmanagment.R
 import com.s26462.shoppingmanagment.activities.ItemListActivity
 import com.s26462.shoppingmanagment.models.Item
+import com.shoppingmanagment.adapters.ProductsAdapter
 import kotlinx.android.synthetic.main.item_sl_details.view.*
 
 open class ItemListAdapter(private val context: Context, private var list: ArrayList<Item>):
@@ -117,6 +119,16 @@ open class ItemListAdapter(private val context: Context, private var list: Array
                     Toast.makeText(context, "Wprowadź dane produktu.", Toast.LENGTH_SHORT).show()
                 }
             }
+//          lista produktów
+            holder.itemView.rv_products_list.layoutManager = LinearLayoutManager(context)
+            holder.itemView.rv_products_list.setHasFixedSize(true)
+
+            val adapter = ProductsAdapter(context, model.products)
+            holder.itemView.rv_products_list.adapter = adapter
+
+//            TODO usuwanie pojedynczego produktu
+//            TODO oznaczanie zakupu
+
         }
     }
 

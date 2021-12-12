@@ -113,4 +113,12 @@
     <dimen name="member_dialog_action_layout_marginTop">10dp</dimen>
     <dimen name="member_dialog_action_button_padding">10dp</dimen>
     <dimen name="member_dialog_action_button_text_size">16sp</dimen>
+<!--product_item-->
+    <dimen name="item_product_content_margin">8dp</dimen>
+    <dimen name="item_product_cv_elevation">5dp</dimen>
+    <dimen name="item_product_label_height">15dp</dimen>
+    <dimen name="item_product_name_text_padding">10dp</dimen>
+    <dimen name="item_product_name_text_size">16sp</dimen>
+    <dimen name="item_product_members_text_padding">10dp</dimen>
+    <dimen name="item_product_members_text_size">14sp</dimen>
 </resources>

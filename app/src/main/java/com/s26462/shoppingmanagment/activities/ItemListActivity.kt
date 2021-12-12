@@ -44,7 +44,7 @@ class ItemListActivity : BaseActivity() {
             R.id.action_members -> {
                 val intent = Intent(this, MembersActivity::class.java)
                 intent.putExtra(Constants.SHOPPINGLIST_DETAIL, mItem)
-                startActivity(intent)
+                startActivityForResult(intent, MEMBERS_REQUEST_CODE)
             }
         }
 
@@ -136,5 +136,9 @@ class ItemListActivity : BaseActivity() {
 
         FirestoreClass().addUpdateItemList(this, mItem)
 
+    }
+
+    companion object{
+        const val MEMBERS_REQUEST_CODE: Int = 13
     }
 }

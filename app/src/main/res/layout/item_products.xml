@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="@dimen/item_product_content_margin"
+    android:background="?attr/selectableItemBackground"
+    android:elevation="@dimen/item_product_cv_elevation"
+    android:orientation="horizontal">
+<!--TODO Opcjonalnie poparwić wygląd, bo produkt zajmuje dużo miejsca-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <View
+            android:id="@+id/view_label_color"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/item_product_label_height"
+            android:visibility="gone"
+            tools:background="@color/colorAccent" />
+
+        <TextView
+            android:id="@+id/tv_product_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/item_product_name_text_padding"
+            android:textSize="@dimen/item_product_name_text_size"
+            tools:text="Nazwa Produktu" />
+
+        <TextView
+            android:id="@+id/tv_product_amount"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/item_product_name_text_padding"
+            android:textSize="@dimen/item_product_name_text_size"
+            tools:text="Ilość" />
+
+        <TextView
+            android:id="@+id/tv_product_price"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/item_product_name_text_padding"
+            android:textSize="@dimen/item_product_name_text_size"
+            tools:text="Cena produktu" />
+
+
+    </LinearLayout>
+</androidx.cardview.widget.CardView>
