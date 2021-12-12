@@ -8,14 +8,16 @@ data class ShoppingList (
     val image: String = "", //TODO spróbować załadować obrazek z użytkownika, który stworzył listę
     val createdBy: String = "",
     val assignedTo: ArrayList<String> = ArrayList(),
-    var documentId: String = ""
+    var documentId: String = "",
+    var itemList: ArrayList<Item> = ArrayList()
 ): Parcelable {
     constructor(parcel: Parcel) : this(
         parcel.readString()!!,
         parcel.readString()!!,
         parcel.readString()!!,
         parcel.createStringArrayList()!!,
-        parcel.readString()!!
+        parcel.readString()!!,
+        parcel.createTypedArrayList(Item.CREATOR)!!
     ) {
     }
 
@@ -25,6 +27,7 @@ data class ShoppingList (
         writeString(createdBy)
         writeStringList(assignedTo)
         writeString(documentId)
+        writeTypedList(itemList)
     }
 
     override fun describeContents(): Int {

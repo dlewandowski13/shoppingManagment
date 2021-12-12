@@ -10,6 +10,10 @@ object Constants {
 
 //  listy zakupów
     const val SPNGLIST: String = "ShoppingList"
-    const val ASSIGNED_TO: String = "assignetTo"
+    const val ASSIGNED_TO: String = "assignedTo"
+
+    const val DOCUMENT_ID: String = "documentId"
+
+    const val ITEM_LIST: String = "itemList"
 
 }

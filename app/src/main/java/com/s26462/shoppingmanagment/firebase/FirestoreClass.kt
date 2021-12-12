@@ -26,6 +26,27 @@ class FirestoreClass {
                     Log.e(activity.javaClass.simpleName,"Error")
             }
     }
+
+//Utworzenie pozycji listy zakupów
+    fun getShoppingListItems(activity: ItemListActivity, documentId: String) {
+    mFireStore.collection(Constants.SPNGLIST)
+        .document(documentId)
+        .get()
+        .addOnSuccessListener {
+                document ->
+                Log.i(activity.javaClass.simpleName, "document: ${document.toString()}")
+                val item = document.toObject(ShoppingList::class.java)!!
+                item.documentId = document.id
+                activity.itemList(item)
+        }
+        .addOnFailureListener {
+                e ->
+            activity.hideProgressDialog()
+            Log.e(activity.javaClass.simpleName, "Error while loading shopping list.", e)
+        }
+    }
+
+
 //utworzenie listy zakupów w bazie
     fun createShoppingList(activity: CreateShoppingListActivity, spngList: ShoppingList) {
         mFireStore.collection(Constants.SPNGLIST)
@@ -44,27 +65,44 @@ class FirestoreClass {
     }
 //  pobranie listy zakupów, w zależności od uprawnień użytkownika
     fun getShoppingList(activity: MainActivity){
-    Toast.makeText(activity,"getShoppingList", Toast.LENGTH_SHORT).show()
         mFireStore.collection(Constants.SPNGLIST)
             .whereArrayContains(Constants.ASSIGNED_TO, getCurrentUserId())
             .get()
             .addOnSuccessListener {
                 document ->
-                Log.i(activity.javaClass.simpleName, document.documents.toString())
+//                Log.i(activity.javaClass.simpleName, "documents: ${document.documents.toString()}")
                 val shoppingLists: ArrayList<ShoppingList> = ArrayList()
                 for(i in document.documents){
                     val shoppingList = i.toObject(ShoppingList::class.java)!!
                     shoppingList.documentId = i.id
                     shoppingLists.add(shoppingList)
                 }
-                Toast.makeText(activity,"Jest lista", Toast.LENGTH_SHORT).show()
                 activity.populateShoppingListToUI(shoppingLists)
             }
             .addOnFailureListener {
                 e ->
-                Toast.makeText(activity,"nie ma listy", Toast.LENGTH_SHORT).show()
                 activity.hideProgressDialog()
                 Log.e(activity.javaClass.simpleName, "Error while creating a ShoppingLists.", e)
+            }
+    }
+
+//  dodanie kategorii do bazy
+    fun addUpdateItemList(activity: ItemListActivity, shoppingList: ShoppingList) {
+        val itemListHashMap = HashMap<String, Any>()
+        itemListHashMap[Constants.ITEM_LIST] = shoppingList.itemList
+
+        mFireStore.collection(Constants.SPNGLIST)
+            .document(shoppingList.documentId)
+            .update(itemListHashMap)
+            .addOnSuccessListener {
+                Log.i(activity.javaClass.simpleName, "Item updates successfully.")
+
+                activity.addUpdateItemSuccess()
+            }
+            .addOnFailureListener {
+                exception ->
+                activity.hideProgressDialog()
+                Log.e(activity.javaClass.simpleName, "Error while creating an Item.", exception)
             }
     }
 

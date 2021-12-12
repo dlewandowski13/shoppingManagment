@@ -72,4 +72,19 @@
     <dimen name="item_spnglist_created_by_text_size">14sp</dimen>
     <dimen name="item_spnglist_divider_marginTop">5dp</dimen>
     <dimen name="item_spnglist_divider_height">0.3dp</dimen>
+<!--item_lists-->
+    <dimen name="item_list_content_padding">10dp</dimen>
+<!--item_details-->
+    <dimen name="item_cv_elevation">5dp</dimen>
+    <dimen name="item_add_item_text_padding">12dp</dimen>
+    <dimen name="item_add_item_text_size">18sp</dimen>
+    <dimen name="item_cv_margin">5dp</dimen>
+    <dimen name="item_cv_corner_radius">5dp</dimen>
+    <dimen name="item_image_buttons_padding">10dp</dimen>
+    <dimen name="item_title_view_elevation">10dp</dimen>
+    <dimen name="item_title_text_padding">10dp</dimen>
+    <dimen name="item_title_text_size">16sp</dimen>
+    <dimen name="item_divider_height">0.5dp</dimen>
+    <dimen name="item_rv_card_list_margin">5dp</dimen>
+    <dimen name="item_add_card_text_elevation">10dp</dimen>
 </resources>

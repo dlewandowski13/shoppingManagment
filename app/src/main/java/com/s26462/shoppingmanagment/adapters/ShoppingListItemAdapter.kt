@@ -48,6 +48,10 @@ open class ShoppingListItemAdapter(private val context: Context, private var lis
         fun onClick(position: Int, model: ShoppingList)
     }
 
+    fun setOnClickListener(onClickListener: OnClickListener) {
+        this.onClickListener = onClickListener
+    }
+
     override fun getItemCount(): Int {
         return list.size
     }

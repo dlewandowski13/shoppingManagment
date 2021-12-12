@@ -14,10 +14,15 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.ShoppingManagment">
         <activity
+            android:name=".activities.ItemListActivity"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.NoActionBar" />
+        <activity
             android:name=".activities.CreateShoppingListActivity"
             android:exported="false"
             android:screenOrientation="portrait"
-            android:theme="@style/Theme.NoActionBar"/>
+            android:theme="@style/Theme.NoActionBar" />
         <activity
             android:name=".activities.MyProfileActivity"
             android:exported="false"

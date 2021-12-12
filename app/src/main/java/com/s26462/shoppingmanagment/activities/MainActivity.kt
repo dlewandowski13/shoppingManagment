@@ -51,16 +51,23 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
 //  wyświetlenie listy zakupów na UI
     fun populateShoppingListToUI(shoppingList: ArrayList<ShoppingList>) {
     hideProgressDialog()
-    Toast.makeText(this, "shopping list size = ${shoppingList.size}", Toast.LENGTH_SHORT).show()
     if (shoppingList.size > 0) {
         rv_spnglists_list.visibility = View.VISIBLE
         tv_no_spnglists_available.visibility = View.GONE
-Toast.makeText(this, "populate shopping list", Toast.LENGTH_SHORT).show()
         rv_spnglists_list.layoutManager = LinearLayoutManager(this)
         rv_spnglists_list.setHasFixedSize(true)
 
         val adapter = ShoppingListItemAdapter(this, shoppingList)
         rv_spnglists_list.adapter = adapter
+
+        adapter.setOnClickListener(object: ShoppingListItemAdapter.OnClickListener{
+            override fun onClick(position: Int, model: ShoppingList) {
+                val intent = Intent(this@MainActivity, ItemListActivity::class.java)
+                intent.putExtra(Constants.DOCUMENT_ID, model.documentId)
+                startActivity(intent)
+            }
+        })
+
     } else {
         rv_spnglists_list.visibility = View.GONE
         tv_no_spnglists_available.visibility = View.VISIBLE
