@@ -93,6 +93,30 @@ open class ItemListAdapter(private val context: Context, private var list: Array
             holder.itemView.ib_delete_list.setOnClickListener {
                 alertDialogForDeleteList(position, model.title)
             }
+//          przycisk dodania produktu
+            holder.itemView.tv_add_product.setOnClickListener {
+                holder.itemView.tv_add_product.visibility = View.GONE
+                holder.itemView.cv_add_product.visibility = View.VISIBLE
+            }
+//          przycisk zamknięcia dodawania produktu
+            holder.itemView.ib_close_product_name.setOnClickListener {
+                holder.itemView.tv_add_product.visibility = View.VISIBLE
+                holder.itemView.cv_add_product.visibility = View.GONE
+            }
+//          przycisk do dodania nowego produktu
+            holder.itemView.ib_done_product_name.setOnClickListener {
+                val productName = holder.itemView.et_product_name.text.toString()
+                val productAmount = holder.itemView.et_product_amount.text.toString()
+                val productPrice = holder.itemView.et_product_price.text.toString()
+
+                if(productName.isNotEmpty() && productAmount.isNotEmpty() && productPrice.isNotEmpty()){
+                    if(context is ItemListActivity){
+                        context.addProductToList(position,productName,productAmount,productPrice)
+                    }
+                } else {
+                    Toast.makeText(context, "Wprowadź dane produktu.", Toast.LENGTH_SHORT).show()
+                }
+            }
         }
     }
 

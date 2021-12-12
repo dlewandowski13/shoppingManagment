@@ -5,6 +5,7 @@
       <map>
         <entry key="..\:/Users/dawid/AndroidStudioProjects/ShoppingManagment/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.18697916666666667" />
         <entry key="..\:/Users/dawid/AndroidStudioProjects/ShoppingManagment/app/src/main/res/drawable-v24/nav_header_main_background.xml" value="0.21770833333333334" />
+        <entry key="..\:/Users/dawid/AndroidStudioProjects/ShoppingManagment/app/src/main/res/drawable-v24/shape_dialog_rounded.xml" value="0.21770833333333334" />
         <entry key="..\:/Users/dawid/AndroidStudioProjects/ShoppingManagment/app/src/main/res/drawable/ic_black_color_back_24dp.xml" value="0.22135416666666666" />
         <entry key="..\:/Users/dawid/AndroidStudioProjects/ShoppingManagment/app/src/main/res/drawable/ic_cancel.xml" value="0.22135416666666666" />
         <entry key="..\:/Users/dawid/AndroidStudioProjects/ShoppingManagment/app/src/main/res/drawable/ic_delete.xml" value="0.22135416666666666" />
@@ -18,17 +19,23 @@
         <entry key="..\:/Users/dawid/AndroidStudioProjects/ShoppingManagment/app/src/main/res/layout/activity_intro.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/dawid/AndroidStudioProjects/ShoppingManagment/app/src/main/res/layout/activity_item_list.xml" value="0.19791666666666666" />
         <entry key="..\:/Users/dawid/AndroidStudioProjects/ShoppingManagment/app/src/main/res/layout/activity_main.xml" value="0.20520833333333333" />
+        <entry key="..\:/Users/dawid/AndroidStudioProjects/ShoppingManagment/app/src/main/res/layout/activity_members.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/dawid/AndroidStudioProjects/ShoppingManagment/app/src/main/res/layout/activity_my_profile.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/dawid/AndroidStudioProjects/ShoppingManagment/app/src/main/res/layout/activity_sign_in.xml" value="0.20520833333333333" />
         <entry key="..\:/Users/dawid/AndroidStudioProjects/ShoppingManagment/app/src/main/res/layout/activity_sign_up.xml" value="0.25" />
         <entry key="..\:/Users/dawid/AndroidStudioProjects/ShoppingManagment/app/src/main/res/layout/activity_splash_acitivity.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/dawid/AndroidStudioProjects/ShoppingManagment/app/src/main/res/layout/app_bar_main.xml" value="0.20520833333333333" />
         <entry key="..\:/Users/dawid/AndroidStudioProjects/ShoppingManagment/app/src/main/res/layout/dialog_progress.xml" value="0.20520833333333333" />
+        <entry key="..\:/Users/dawid/AndroidStudioProjects/ShoppingManagment/app/src/main/res/layout/dialog_search_member.xml" value="0.2015625" />
+        <entry key="..\:/Users/dawid/AndroidStudioProjects/ShoppingManagment/app/src/main/res/layout/item_member.xml" value="0.20520833333333333" />
         <entry key="..\:/Users/dawid/AndroidStudioProjects/ShoppingManagment/app/src/main/res/layout/item_shopping_list.xml" value="0.2015625" />
         <entry key="..\:/Users/dawid/AndroidStudioProjects/ShoppingManagment/app/src/main/res/layout/item_sl_details.xml" value="0.20520833333333333" />
         <entry key="..\:/Users/dawid/AndroidStudioProjects/ShoppingManagment/app/src/main/res/layout/main_content.xml" value="0.20520833333333333" />
         <entry key="..\:/Users/dawid/AndroidStudioProjects/ShoppingManagment/app/src/main/res/layout/nav_header_main.xml" value="0.20520833333333333" />
         <entry key="..\:/Users/dawid/AndroidStudioProjects/ShoppingManagment/app/src/main/res/menu/activity_main_drawer.xml" value="0.20520833333333333" />
+        <entry key="..\:/Users/dawid/AndroidStudioProjects/ShoppingManagment/app/src/main/res/menu/dialog_search_member.xml" value="0.20520833333333333" />
+        <entry key="..\:/Users/dawid/AndroidStudioProjects/ShoppingManagment/app/src/main/res/menu/menu_add_member.xml" value="0.20520833333333333" />
+        <entry key="..\:/Users/dawid/AndroidStudioProjects/ShoppingManagment/app/src/main/res/menu/menu_members.xml" value="0.36666666666666664" />
       </map>
     </option>
   </component>

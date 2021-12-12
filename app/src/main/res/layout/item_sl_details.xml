@@ -172,13 +172,13 @@
             </androidx.cardview.widget.CardView>
 
             <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rv_card_list"
+                android:id="@+id/rv_products_list"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="@dimen/item_rv_card_list_margin" />
+                android:layout_margin="@dimen/item_rv_products_list_margin" />
 
             <androidx.cardview.widget.CardView
-                android:id="@+id/cv_add_card"
+                android:id="@+id/cv_add_product"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/item_cv_margin"
@@ -194,7 +194,7 @@
                     android:orientation="horizontal">
 
                     <ImageButton
-                        android:id="@+id/ib_close_card_name"
+                        android:id="@+id/ib_close_product_name"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:background="?attr/selectableItemBackground"
@@ -203,16 +203,32 @@
                         android:src="@drawable/ic_cancel" />
 
                     <EditText
-                        android:id="@+id/et_card_name"
+                        android:id="@+id/et_product_name"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:autofillHints="@string/hint_card_name"
-                        android:hint="@string/hint_card_name"
+                        android:autofillHints="@string/hint_product_name"
+                        android:hint="@string/hint_product_name"
+                        android:inputType="text" />
+                    <EditText
+                        android:id="@+id/et_product_amount"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:autofillHints="@string/hint_product_name"
+                        android:hint="@string/hint_product_amount"
+                        android:inputType="text" />
+                    <EditText
+                        android:id="@+id/et_product_price"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:autofillHints="@string/hint_product_name"
+                        android:hint="@string/hint_product_price"
                         android:inputType="text" />
 
                     <ImageButton
-                        android:id="@+id/ib_done_item_name"
+                        android:id="@+id/ib_done_product_name"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:background="?attr/selectableItemBackground"
@@ -223,15 +239,15 @@
             </androidx.cardview.widget.CardView>
 
             <TextView
-                android:id="@+id/tv_add_card"
+                android:id="@+id/tv_add_product"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/list_action_color"
-                android:elevation="@dimen/item_add_card_text_elevation"
+                android:elevation="@dimen/item_add_products_text_elevation"
                 android:foreground="?attr/selectableItemBackground"
                 android:gravity="center"
                 android:padding="@dimen/item_add_item_text_padding"
-                android:text="@string/action_add_card"
+                android:text="@string/action_add_product"
                 android:textColor="@color/colorAccent"
                 android:textSize="@dimen/item_add_item_text_size"
                 tools:visibility="visible" />

@@ -3,7 +3,7 @@ package com.s26462.shoppingmanagment.models
 import android.os.Parcel
 import android.os.Parcelable
 
-data class ItemDetails (
+data class Products (
     val name: String = "",
     val amount: String = "",
     val price: String = "",
@@ -28,12 +28,12 @@ data class ItemDetails (
         return 0
     }
 
-    companion object CREATOR : Parcelable.Creator<ItemDetails> {
-        override fun createFromParcel(parcel: Parcel): ItemDetails {
-            return ItemDetails(parcel)
+    companion object CREATOR : Parcelable.Creator<Products> {
+        override fun createFromParcel(parcel: Parcel): Products {
+            return Products(parcel)
         }
 
-        override fun newArray(size: Int): Array<ItemDetails?> {
+        override fun newArray(size: Int): Array<Products?> {
             return arrayOfNulls(size)
         }
     }

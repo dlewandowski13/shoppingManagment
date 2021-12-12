@@ -85,6 +85,32 @@
     <dimen name="item_title_text_padding">10dp</dimen>
     <dimen name="item_title_text_size">16sp</dimen>
     <dimen name="item_divider_height">0.5dp</dimen>
-    <dimen name="item_rv_card_list_margin">5dp</dimen>
-    <dimen name="item_add_card_text_elevation">10dp</dimen>
+    <dimen name="item_rv_products_list_margin">5dp</dimen>
+    <dimen name="item_add_products_text_elevation">10dp</dimen>
+<!--members-->
+    <dimen name="members_content_padding">16dp</dimen>
+    <dimen name="members_cv_marginTop">5dp</dimen>
+<!--item_members-->
+    <dimen name="item_member_marginBottom">10dp</dimen>
+    <dimen name="item_member_content_padding">10dp</dimen>
+    <dimen name="item_member_member_image_size">60dp</dimen>
+    <dimen name="item_member_image_circular_width_size">0.5dp</dimen>
+    <dimen name="item_member_detail_layout_marginStart">10dp</dimen>
+    <dimen name="item_member_name_text_size">18sp</dimen>
+    <dimen name="item_member_email_text_size">14sp</dimen>
+    <dimen name="item_member_divider_height">0.3dp</dimen>
+    <dimen name="item_member_divider_marginTop">5dp</dimen>
+<!--addmember-->
+    <dimen name="dialog_member_cv_elevation">3dp</dimen>
+    <dimen name="dialog_member_cv_cornerRadius">3dp</dimen>
+    <dimen name="dialog_member_content_padding">10dp</dimen>
+    <dimen name="dialog_member_title_padding">5dp</dimen>
+    <dimen name="dialog_member_title_text_size">18sp</dimen>
+    <dimen name="member_dialog_divider_height">1dp</dimen>
+    <dimen name="member_dialog_divider_marginTopBottom">3dp</dimen>
+    <dimen name="member_dialog_til_email_marginTop">10dp</dimen>
+    <dimen name="member_dialog_action_layout_height">40dp</dimen>
+    <dimen name="member_dialog_action_layout_marginTop">10dp</dimen>
+    <dimen name="member_dialog_action_button_padding">10dp</dimen>
+    <dimen name="member_dialog_action_button_text_size">16sp</dimen>
 </resources>

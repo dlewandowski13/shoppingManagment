@@ -169,4 +169,65 @@ class FirestoreClass {
         }
         return currentUserID
     }
+
+//  pobranie z bazy wszystkich członków danej listy i przygotowanie listy userów
+    fun getAssignedMembersListDetails(activity: MembersActivity, assignedTo: ArrayList<String>){
+        mFireStore.collection(Constants.USERS)
+            .whereIn(Constants.ID, assignedTo)
+            .get()
+            .addOnSuccessListener {
+                document ->
+                Log.i(activity.javaClass.simpleName,"Members List: ${document.documents.toString()}")
+
+                val usersList : ArrayList<User> = ArrayList()
+
+                for(i in document.documents){
+                    val user = i.toObject(User::class.java)!!
+                    usersList.add(user)
+                }
+                activity.setupMemberList(usersList)
+            }
+            .addOnFailureListener { e ->
+                activity.hideProgressDialog()
+                Log.e(activity.javaClass.simpleName,"Error while getting members.",e)
+            }
+    }
+
+    fun getMemberDetails(activity: MembersActivity, email: String) {
+        mFireStore.collection(Constants.USERS)
+            .whereEqualTo(Constants.EMAIL, email)
+            .get()
+            .addOnSuccessListener {
+                document ->
+                if(document.documents.size > 0) {
+                    val user = document.documents[0].toObject(User::class.java)!!
+                    activity.memberDetails(user)
+                } else {
+                    activity.hideProgressDialog()
+                    activity.showErrorSnackBar("Nie znaleziono takiego użytkownika.")
+                }
+            }
+            .addOnFailureListener { e ->
+                activity.hideProgressDialog()
+                Log.e(activity.javaClass.simpleName,"Error while getting user details.",e)
+                activity.showErrorSnackBar("Wystąpił problem podczas pobierania danych użytkownika, spróbuj jeszcze raz.")
+            }
+
+    }
+//  przypisanie użytkownika do listy zakupów
+    fun assignMemberToShoppingList(activity: MembersActivity, shoppingList: ShoppingList, user: User) {
+        val assignedToHashMap = HashMap<String, Any>()
+        assignedToHashMap[Constants.ASSIGNED_TO] = shoppingList.assignedTo
+
+        mFireStore.collection(Constants.SPNGLIST)
+            .document(shoppingList.documentId)
+            .update(assignedToHashMap)
+            .addOnSuccessListener {
+                activity.memberAssignSuccess(user)
+            }
+            .addOnFailureListener { e ->
+                Log.e(activity.javaClass.simpleName,"Error while updating user.",e)
+            }
+    }
+//    TODO usuwanie użytkowników z listy
 }

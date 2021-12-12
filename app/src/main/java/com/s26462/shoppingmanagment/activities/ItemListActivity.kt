@@ -1,12 +1,16 @@
 package com.s26462.shoppingmanagment.activities
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.s26462.shoppingmanagment.R
 import com.s26462.shoppingmanagment.adapters.ItemListAdapter
 import com.s26462.shoppingmanagment.firebase.FirestoreClass
 import com.s26462.shoppingmanagment.models.Item
+import com.s26462.shoppingmanagment.models.Products
 import com.s26462.shoppingmanagment.models.ShoppingList
 import com.s26462.shoppingmanagment.utils.Constants
 import kotlinx.android.synthetic.main.activity_item_list.*
@@ -29,6 +33,24 @@ class ItemListActivity : BaseActivity() {
         showProgressDialog(resources.getString(R.string.please_wait))
         FirestoreClass().getShoppingListItems(this, spngListDocumentId)
     }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.menu_members, menu)
+        return super.onCreateOptionsMenu(menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when(item.itemId){
+            R.id.action_members -> {
+                val intent = Intent(this, MembersActivity::class.java)
+                intent.putExtra(Constants.SHOPPINGLIST_DETAIL, mItem)
+                startActivity(intent)
+            }
+        }
+
+        return super.onOptionsItemSelected(item)
+    }
+
 //Ustawienia actionBar
     private fun setupActionBar() {
         setSupportActionBar(toolbar_item_list_activity)
@@ -92,5 +114,27 @@ class ItemListActivity : BaseActivity() {
         showProgressDialog(resources.getString(R.string.please_wait))
 
         FirestoreClass().addUpdateItemList(this, mItem)
+    }
+
+    fun addProductToList(position: Int, productName: String, amount: String, price: String, bougth: Boolean = false) {
+        mItem.itemList.removeAt(mItem.itemList.size -1)
+
+        val product = Products(productName,amount,price,bougth)
+
+        val productsList = mItem.itemList[position].products
+        productsList.add(product)
+
+        val item = Item(
+            mItem.itemList[position].title,
+            mItem.itemList[position].createdBy,
+            productsList
+        )
+
+        mItem.itemList[position] = item
+
+        showProgressDialog(resources.getString(R.string.please_wait))
+
+        FirestoreClass().addUpdateItemList(this, mItem)
+
     }
 }
