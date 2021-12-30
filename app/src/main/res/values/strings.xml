@@ -1,0 +1,54 @@
+<resources>
+    <string name="app_name">Shopping Managment</string>
+
+    <string name="image_contentDescription">image</string>
+    <string name="lets_get_started_text">Zaczynamy!</string>
+    <string name="intro_text_description">Twórz i współdziel listy zakupów.</string>
+    <string name="sign_in">Zaloguj się</string>
+    <string name="sign_up">Zarejestruj się</string>
+
+    <string name="sign_up_description_text">Podaj nazwę, email oraz hasło w celu rejestracji.</string>
+    <string name="name">Nazwa</string>
+    <string name="password">Hasło</string>
+    <string name="email">Email</string>
+    <string name="sign_in_description_text">Podaj email i hasło żeby się zalogować</string>
+
+    <string name="please_click_back_again_to_exit">Naciśnij ponownie, żeby wyjść.</string>
+    <string name="please_wait">Proszę czekaj&#8230;</string>
+
+    <string name="nav_my_profile">Mój profil</string>
+    <string name="nav_maps">Mapy</string>
+    <string name="nav_sign_out">Wyloguj się</string>
+
+    <string name="mobile">Telefon</string>
+    <string name="update">AKTUALIZUJ</string>
+    <string name="my_profile_title">Mój profil</string>
+
+    <string name="create_spnglist_title">Uwórz nową listę zakupów</string>
+    <string name="create">UTWÓRZ</string>
+    <string name="spnglist_name">Nowa lista zakupów</string>
+
+    <string name="no_spnglists_are_available">Nie dodałeś jeszcze żadnej listy zakupów.</string>
+    <string name="no_shops_are_available">Nie dodałeś jeszcze żadnego sklepu.</string>
+
+    <string name="action_add_list">Dodaj kategorię</string>
+    <string name="hint_list_name">Nazwa kategorii</string>
+    <string name="action_add_product">Dodaj pozycję</string>
+    <string name="hint_product_name">Nazwa produktu</string>
+    <string name="hint_product_amount">Ilość</string>
+    <string name="hint_product_price">Cena</string>
+    <string name="add_list">Dodaj kategorię</string>
+
+    <string name="members">Użytkownicy</string>
+    <string name="shops">Sklepy</string>
+
+    <string name="add_member">Nadaj uprawnienie</string>
+    <string name="cancel">ZAMKNIJ</string>
+    <string name="add">DODAJ</string>
+    <string name="search_member">Wyszukaj użytkownika</string>
+
+    <string name="add_Shop">Dodaj sklep</string>
+    <string name="name_shop">Nazwa sklepu</string>
+    <string name="description_shop">Opis sklepu</string>
+    <string name="radius_shop">Promień do powiadomień</string>
+</resources>
