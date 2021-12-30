@@ -55,7 +55,7 @@ class FirestoreClass {
             .addOnSuccessListener {
                 Log.i(activity.javaClass.simpleName, "Shop created successfully.")
                 Toast.makeText(activity, "Stworzono nowy sklep zakupów", Toast.LENGTH_SHORT).show()
-                activity.shopAddSuccess(shop)
+//                activity.shopAddSuccess(shop)
             }
             .addOnFailureListener {
                     exception ->

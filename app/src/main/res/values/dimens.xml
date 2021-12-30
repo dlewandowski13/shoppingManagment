@@ -121,4 +121,14 @@
     <dimen name="item_product_name_text_size">16sp</dimen>
     <dimen name="item_product_members_text_padding">10dp</dimen>
     <dimen name="item_product_members_text_size">14sp</dimen>
+<!--add_shop-->
+    <dimen name="add_screen_shop_image_marginTop">15dp</dimen>
+    <dimen name="main_content_padding">16dp</dimen>
+    <dimen name="edit_text_text_size">16sp</dimen>
+    <dimen name="add_screen_til_marginTop">5dp</dimen>
+    <dimen name="shop_image_size">200dp</dimen>
+    <dimen name="add_screen_place_image_marginTop">15dp</dimen>
+    <dimen name="add_screen_place_image_padding">2dp</dimen>
+    <dimen name="image_border_stroke_size">0.5dp</dimen>
+    <dimen name="add_shop_image_shape_radius">3dp</dimen>
 </resources>

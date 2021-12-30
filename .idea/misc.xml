@@ -3,7 +3,9 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/dawid/AndroidStudioProjects/ShoppingManagment/app/src/main/res/drawable-mdpi/shape_image_view_border.xml" value="0.2765625" />
         <entry key="..\:/Users/dawid/AndroidStudioProjects/ShoppingManagment/app/src/main/res/drawable/ic_nav_sign_out.xml" value="0.22135416666666666" />
+        <entry key="..\:/Users/dawid/AndroidStudioProjects/ShoppingManagment/app/src/main/res/layout/activity_add_shop.xml" value="0.20520833333333333" />
         <entry key="..\:/Users/dawid/AndroidStudioProjects/ShoppingManagment/app/src/main/res/layout/activity_create_shopping_list.xml" value="0.29846014492753625" />
         <entry key="..\:/Users/dawid/AndroidStudioProjects/ShoppingManagment/app/src/main/res/layout/activity_intro.xml" value="0.29846014492753625" />
         <entry key="..\:/Users/dawid/AndroidStudioProjects/ShoppingManagment/app/src/main/res/layout/activity_item_list.xml" value="0.29846014492753625" />
