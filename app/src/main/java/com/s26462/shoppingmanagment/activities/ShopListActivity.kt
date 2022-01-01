@@ -26,12 +26,18 @@ import kotlinx.android.synthetic.main.dialog_search_member.*
 
 class ShopListActivity : BaseActivity() {
 // TODO do przerobienia, żeby w tym miejscu wybierać listę sklepów, a tworzyć z głównego menu
-//    private lateinit var mShop: ShoppingList
-//    private lateinit var mShopList: ArrayList<Shop>
+    private lateinit var mShop: ShoppingList
+    private lateinit var mShopList: ArrayList<Shop>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_shop_list)
+
+        Toast.makeText(this,"mIntent: ${intent.hasExtra(Constants.SHOPPINGLIST_DETAIL)}",
+            Toast.LENGTH_SHORT).show()
+        if(intent.hasExtra(Constants.SHOPPINGLIST_DETAIL)){
+            mShop = intent.getParcelableExtra(Constants.SHOPPINGLIST_DETAIL)!!
+        }
         setupActionBar()
 
     }
@@ -65,6 +71,7 @@ class ShopListActivity : BaseActivity() {
 
         toolbar_shops_activity.setNavigationOnClickListener { onBackPressed() }
     }
+
 //
 //    //  ustawienie listy użytkowników
 //    fun shopList(list: ArrayList<Shop>){

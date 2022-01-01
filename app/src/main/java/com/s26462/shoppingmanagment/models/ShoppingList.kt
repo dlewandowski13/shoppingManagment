@@ -10,7 +10,7 @@ data class ShoppingList (
     val assignedTo: ArrayList<String> = ArrayList(),
     var documentId: String = "",
     var itemList: ArrayList<Item> = ArrayList(),
-    var shopList: ArrayList<Shop> = ArrayList()
+    var shopList: ArrayList<String> = ArrayList()
 ): Parcelable {
     constructor(parcel: Parcel) : this(
         parcel.readString()!!,
@@ -19,7 +19,7 @@ data class ShoppingList (
         parcel.createStringArrayList()!!,
         parcel.readString()!!,
         parcel.createTypedArrayList(Item.CREATOR)!!,
-        parcel.createTypedArrayList(Shop.CREATOR)!!
+        parcel.createStringArrayList()!!
     ) {
     }
 
@@ -30,7 +30,7 @@ data class ShoppingList (
         writeStringList(assignedTo)
         writeString(documentId)
         writeTypedList(itemList)
-        writeTypedList(shopList)
+        writeStringList(shopList)
     }
 
     override fun describeContents(): Int {

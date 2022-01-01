@@ -7,14 +7,14 @@ data class Shop (
     val id: String = "",
     val name: String = "",
     val description: String = "",
-    val radius: Int = 0,
+    val radius: String = "",
     val image: String = ""
         ): Parcelable {
     constructor(parcel: Parcel) : this(
         parcel.readString()!!,
         parcel.readString()!!,
         parcel.readString()!!,
-        parcel.readInt()!!,
+        parcel.readString()!!,
         parcel.readString()!!
     ) {
     }
@@ -23,7 +23,7 @@ data class Shop (
         writeString(id)
         writeString(name)
         writeString(description)
-        writeInt(radius)
+        writeString(radius)
         writeString(image)
     }
 

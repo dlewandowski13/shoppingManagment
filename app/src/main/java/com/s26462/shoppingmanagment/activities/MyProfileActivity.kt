@@ -179,7 +179,7 @@ class MyProfileActivity : BaseActivity() {
         if(mSelectedImageFileUri != null) {
             val sRef : StorageReference =
                 FirebaseStorage.getInstance().reference.child(
-                "USER_IMATE" + System.currentTimeMillis() + "."
+                "USER_IMAGE" + System.currentTimeMillis() + "."
                         + getFileExtention(mSelectedImageFileUri))
 
             sRef.putFile(mSelectedImageFileUri!!).addOnSuccessListener {

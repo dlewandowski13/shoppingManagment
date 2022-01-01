@@ -47,24 +47,6 @@ class FirestoreClass {
         }
     }
 
-    //utworzenie listy zakupów w bazie
-    fun createShop(activity: ShopListActivity, shop: Shop) {
-        mFireStore.collection(Constants.SPNGLIST)
-            .document()
-            .set(shop, SetOptions.merge())
-            .addOnSuccessListener {
-                Log.i(activity.javaClass.simpleName, "Shop created successfully.")
-                Toast.makeText(activity, "Stworzono nowy sklep zakupów", Toast.LENGTH_SHORT).show()
-//                activity.shopAddSuccess(shop)
-            }
-            .addOnFailureListener {
-                    exception ->
-                activity.hideProgressDialog()
-                Log.e(activity.javaClass.simpleName, "Error while creating ShoppingList.", exception)
-            }
-    }
-
-
 //utworzenie listy zakupów w bazie
     fun createShoppingList(activity: CreateShoppingListActivity, spngList: ShoppingList) {
         mFireStore.collection(Constants.SPNGLIST)
@@ -124,6 +106,25 @@ class FirestoreClass {
             }
     }
 
+//metoda do dodania nowego sklepu do bazy danych, wykorzystuję HashMap
+    fun createShop(activity: AddShopActivity, shopHashMap: HashMap<String, Any>) {
+        mFireStore.collection(Constants.SHOPS)
+            .document()
+            .set(shopHashMap)
+            .addOnSuccessListener {
+                Log.i(activity.javaClass.simpleName,"Shop created successfully!")
+                Toast.makeText(activity,"Sklep został dodany!", Toast.LENGTH_LONG).show()
+                val name = shopHashMap[Constants.SHOP_NAME].toString()
+                activity.shopCreatedSuccess(name)
+            }
+            .addOnFailureListener {
+                    e ->
+                activity.hideProgressDialog()
+                Log.e(activity.javaClass.simpleName,"Error while creating shop!",e)
+                Toast.makeText(activity,"Nie udało się dodać sklepu!",Toast.LENGTH_LONG).show()
+            }
+    }
+
 //metoda do aktualizacji danych o użytkowniku, wykorzystuję HashMap
     fun updateUserProfileData(activity: MyProfileActivity, userHashMap: HashMap<String, Any>) {
         mFireStore.collection(Constants.USERS)
@@ -155,11 +156,16 @@ class FirestoreClass {
                     is MainActivity -> {
                         activity.updateNavigationUserDetails(loggedInUser, readShoppingList)
                     }
-                    is MyProfileActivity ->
+                    is MyProfileActivity -> {
                         activity.setUserDataInUI(loggedInUser)
+                    }
 
-                    is CreateShoppingListActivity ->
+                    is CreateShoppingListActivity -> {
                         activity.loadUserImage(loggedInUser)
+                    }
+                    is AddShopActivity -> {
+//                        załadowanie danych o sklepach
+                    }
                 }
 
             } .addOnFailureListener {
@@ -211,6 +217,31 @@ class FirestoreClass {
             }
     }
 
+    //  pobranie sklepu
+    fun getShopDetails(activity: AddShopActivity, name: String) {
+        mFireStore.collection(Constants.SHOPS)
+            .whereEqualTo(Constants.SHOP_NAME, name)
+            .get()
+            .addOnSuccessListener {
+                    document ->
+                if(document.documents.size > 0) {
+                    val shop = document.documents[0].toObject(Shop::class.java)!!
+                    Toast.makeText(activity,"shop: $shop",Toast.LENGTH_SHORT).show()
+                    activity.assigneeShop(shop)
+                } else {
+                    activity.hideProgressDialog()
+                    activity.showErrorSnackBar("Nie znaleziono takiego sklepu.")
+                }
+            }
+            .addOnFailureListener { e ->
+                activity.hideProgressDialog()
+                Log.e(activity.javaClass.simpleName,"Error while getting user details.",e)
+                activity.showErrorSnackBar("Wystąpił problem podczas pobierania danych sklepu, spróbuj jeszcze raz.")
+            }
+
+    }
+
+//  pobranie użytkownika
     fun getMemberDetails(activity: MembersActivity, email: String) {
         mFireStore.collection(Constants.USERS)
             .whereEqualTo(Constants.EMAIL, email)
@@ -245,6 +276,22 @@ class FirestoreClass {
             }
             .addOnFailureListener { e ->
                 Log.e(activity.javaClass.simpleName,"Error while updating user.",e)
+            }
+    }
+
+//  przypisanie sklepu do listy zakupów
+    fun assignShopToShoppingList(activity: AddShopActivity, shoppingList: ShoppingList, shop: Shop) {
+        val shopHashMap = HashMap<String, Any>()
+        shopHashMap[Constants.SHOP_LIST] = shoppingList.shopList
+        Toast.makeText(activity,"shopHashMap: $shopHashMap",Toast.LENGTH_LONG).show()
+        mFireStore.collection(Constants.SPNGLIST)
+            .document(shoppingList.documentId)
+            .update(shopHashMap)
+            .addOnSuccessListener {
+                activity.shopAssignedSuccess()
+            }
+            .addOnFailureListener { e ->
+                Log.e(activity.javaClass.simpleName,"Error while updating shops.",e)
             }
     }
 //    TODO usuwanie użytkowników z listy

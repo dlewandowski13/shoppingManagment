@@ -55,4 +55,7 @@ dependencies {
 //        https://github.com/bumptech/glide
     implementation 'com.github.bumptech.glide:glide:4.12.0'
     annotationProcessor 'com.github.bumptech.glide:compiler:4.12.0'
+//    https://github.com/Karumi/Dexter
+//  TODO przerobić wszystkie uprawnienia na dexter?
+    implementation 'com.karumi:dexter:6.2.3'
 }
