@@ -33,8 +33,8 @@ class ShopListActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_shop_list)
 
-        Toast.makeText(this,"mIntent: ${intent.hasExtra(Constants.SHOPPINGLIST_DETAIL)}",
-            Toast.LENGTH_SHORT).show()
+//        Toast.makeText(this,"mIntent: ${intent.hasExtra(Constants.SHOPPINGLIST_DETAIL)}",
+//            Toast.LENGTH_SHORT).show()
         if(intent.hasExtra(Constants.SHOPPINGLIST_DETAIL)){
             mShop = intent.getParcelableExtra(Constants.SHOPPINGLIST_DETAIL)!!
         }
@@ -50,8 +50,9 @@ class ShopListActivity : BaseActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when(item.itemId){
             R.id.action_add_shop -> {
-                Toast.makeText(this,"add shop", Toast.LENGTH_SHORT).show()
-                val intent = Intent(this, AddShopActivity::class.java)
+//                TODO chyba to nie działa, jakoś przekazać shopping list
+                val intentAddShop = Intent(this, AddShopActivity::class.java)
+                    intentAddShop.putExtra(Constants.SHOPPINGLIST_DETAIL, mShop)
                 startActivity(intent)
                 return true
             }

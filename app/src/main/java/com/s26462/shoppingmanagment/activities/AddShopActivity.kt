@@ -45,8 +45,8 @@ class AddShopActivity : BaseActivity(), View.OnClickListener {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add_shop)
 //
-//        Toast.makeText(this,"mIntent: ${intent.hasExtra(Constants.SHOPPINGLIST_DETAIL)}",
-//        Toast.LENGTH_SHORT).show()
+        Toast.makeText(this,"mIntent: ${intent.hasExtra(Constants.SHOPPINGLIST_DETAIL)}",
+        Toast.LENGTH_SHORT).show()
 
         if(intent.hasExtra(Constants.SHOPPINGLIST_DETAIL)){
             mItem = intent.getParcelableExtra(Constants.SHOPPINGLIST_DETAIL)!!
