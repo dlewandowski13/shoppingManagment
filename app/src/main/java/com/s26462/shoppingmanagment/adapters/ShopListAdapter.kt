@@ -12,6 +12,9 @@ import kotlinx.android.synthetic.main.item_shop.view.*
 
 open class ShopListAdapter(private val context: Context, private var list: ArrayList<Shop>):
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+
+    private var onClickListener: OnClickListener? = null
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return MyViewHolder(
             LayoutInflater.from(context).inflate(
@@ -45,4 +48,12 @@ open class ShopListAdapter(private val context: Context, private var list: Array
     }
 
     class MyViewHolder(view: View) : RecyclerView.ViewHolder(view)
+
+    fun setOnClickListener(onClickListener: OnClickListener){
+        this.onClickListener = onClickListener
+    }
+
+    interface OnClickListener {
+        fun onClick(position: Int, model: Shop)
+    }
 }

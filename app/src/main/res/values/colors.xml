@@ -22,4 +22,6 @@
     <color name="list_action_color">#F7F6FA</color>
     <color name="list_title_view_bg_color">#F8F8F8</color>
 
+    <color name="shop_edit_color">#8FB8DE</color>
+
 </resources>
