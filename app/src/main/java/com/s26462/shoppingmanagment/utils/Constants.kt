@@ -31,7 +31,9 @@ object Constants {
     const val SHOP_NAME = "name"
     const val SHOP_DESCRIPTION = "description"
     const val SHOP_RADIUS = "radius"
-    const val SHOP_LOCATION = "radius"
     const val SHOP_IMAGE = "image"
+    const val SHOP_LOCATION = "location"
+    const val SHOP_LATITUDE = "latitude"
+    const val SHOP_LONGITUDE = "longitude"
 
 }

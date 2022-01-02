@@ -7,15 +7,19 @@ data class Shop (
     val id: String = "",
     val name: String = "",
     val description: String = "",
-    val radius: String = "",
-    val image: String = ""
+    val radius: Long = 0,
+    val image: String = "",
+    var latitude: Double = 0.0,
+    var longitude: Double = 0.0
         ): Parcelable {
     constructor(parcel: Parcel) : this(
         parcel.readString()!!,
         parcel.readString()!!,
         parcel.readString()!!,
+        parcel.readLong()!!,
         parcel.readString()!!,
-        parcel.readString()!!
+        parcel.readDouble()!!,
+        parcel.readDouble()!!
     ) {
     }
 
@@ -23,8 +27,10 @@ data class Shop (
         writeString(id)
         writeString(name)
         writeString(description)
-        writeString(radius)
+        writeLong(radius)
         writeString(image)
+        writeDouble(latitude)
+        writeDouble(longitude)
     }
 
     override fun describeContents(): Int {

@@ -3,6 +3,7 @@ package com.s26462.shoppingmanagment.activities
 import android.Manifest
 import android.app.Activity
 import android.content.ActivityNotFoundException
+import android.content.ContentValues.TAG
 import android.content.Intent
 import android.graphics.Bitmap
 import android.net.Uri
@@ -14,6 +15,10 @@ import android.view.View
 import android.webkit.MimeTypeMap
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
+import com.google.android.libraries.places.api.Places
+import com.google.android.libraries.places.api.model.Place
+import com.google.android.libraries.places.widget.Autocomplete
+import com.google.android.libraries.places.widget.model.AutocompleteActivityMode
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import com.karumi.dexter.Dexter
@@ -30,22 +35,31 @@ import kotlinx.android.synthetic.main.activity_add_shop.*
 import kotlinx.android.synthetic.main.activity_my_profile.*
 import kotlinx.android.synthetic.main.activity_shop_list.*
 import java.io.IOException
+import java.lang.Exception
 
 class AddShopActivity : BaseActivity(), View.OnClickListener {
 
     companion object {
         private const val PICK_IMAGE_REQUEST_CODE = 1
         private const val CAMERA_REQUEST_CODE = 2
+        private const val AUTOCOMPLETE_REQUEST_CODE = 3
     }
     private var mSelectedImageFileUri: Uri? = null
     private var mShopImageURL : String = ""
     private lateinit var mItem: ShoppingList
+    private var mLatitude: Double = 0.0
+    private var mLongitude: Double = 0.0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add_shop)
 //
 //        Toast.makeText(this,"mIntent: ${intent.hasExtra(Constants.SHOPPINGLIST_DETAIL)}", Toast.LENGTH_SHORT).show()
+
+        if(!Places.isInitialized()){
+            Places.initialize(this@AddShopActivity,
+                resources.getString(R.string.google_maps_key))
+        }
 
         if(intent.hasExtra(Constants.SHOPPINGLIST_DETAIL)){
             mItem = intent.getParcelableExtra(Constants.SHOPPINGLIST_DETAIL)!!
@@ -55,6 +69,7 @@ class AddShopActivity : BaseActivity(), View.OnClickListener {
 
         iv_shop_image.setOnClickListener(this)
         btn_create_shop.setOnClickListener(this)
+        et_shop_location.setOnClickListener(this)
 
         FirestoreClass().loadUserData(this, false)
     }
@@ -83,6 +98,22 @@ class AddShopActivity : BaseActivity(), View.OnClickListener {
             }
             R.id.btn_create_shop -> {
                 uploadShopImage()
+            }
+            R.id.et_shop_location -> {
+                try {
+                    // Set the fields to specify which types of place data to
+                    // return after the user has made a selection.
+                    val fields = listOf(Place.Field.ID, Place.Field.NAME,
+                         Place.Field.LAT_LNG, Place.Field.ADDRESS)
+
+                    // Start the autocomplete intent.
+                    val intent = Autocomplete.IntentBuilder(AutocompleteActivityMode.FULLSCREEN, fields)
+                        .build(this@AddShopActivity)
+                    startActivityForResult(intent, AUTOCOMPLETE_REQUEST_CODE)
+
+                }catch (e:Exception){
+                    e.printStackTrace()
+                }
             }
         }
     }
@@ -123,6 +154,13 @@ class AddShopActivity : BaseActivity(), View.OnClickListener {
                 val thumbnail : Bitmap = data!!.extras!!.get("data") as Bitmap
                 mSelectedImageFileUri = data!!.data
                 iv_shop_image.setImageBitmap(thumbnail)
+            } else if (requestCode == AUTOCOMPLETE_REQUEST_CODE) {
+                val place = Autocomplete.getPlaceFromIntent(data)
+                Log.i(TAG, "Place: ${place.name}, ${place.id}")
+                et_shop_location.setText(place.address)
+                mLatitude = place.latLng!!.latitude
+                mLongitude = place.latLng!!.longitude
+
             }
         }
     }
@@ -237,16 +275,20 @@ class AddShopActivity : BaseActivity(), View.OnClickListener {
         val shopName = et_shop_name.text.toString()
         val shopDescription = et_shop_descrioption.text.toString()
         val shopRadius = et_shop_radius.text.toString()
+        val shopLocation = et_shop_location.text.toString()
 //    TODO cała obsługa lokalizacji zostawiam, jak do tego dojdę
 //        val shopLocation = et_shop_location.text.toString()
         var anyChangesMade = false
 
         if (/*mShopImageURL.isNotEmpty() &&*/ shopName.isNotEmpty() && shopDescription.isNotEmpty()
-            && shopRadius.isNotEmpty()) {
+            && shopRadius.isNotEmpty() && shopLocation.isNotEmpty() && mLatitude != 0.0 && mLongitude != 0.0) {
             shopHashMap[Constants.SHOP_NAME] = shopName
             shopHashMap[Constants.SHOP_DESCRIPTION] = shopDescription
-            shopHashMap[Constants.SHOP_RADIUS] = shopRadius
+            shopHashMap[Constants.SHOP_RADIUS] = shopRadius.toLong()
             shopHashMap[Constants.SHOP_IMAGE] = mShopImageURL
+            shopHashMap[Constants.SHOP_LOCATION] = shopLocation
+            shopHashMap[Constants.SHOP_LATITUDE] = mLatitude
+            shopHashMap[Constants.SHOP_LONGITUDE] = mLongitude
             anyChangesMade = true
         }
 
