@@ -27,6 +27,7 @@ object Constants {
 //  obiekt sklep
     const val SHOPS = "shops"
 //  pola w obiekcie shop
+    const val SHOP_ID = "id"
     const val SHOP_NAME = "name"
     const val SHOP_DESCRIPTION = "description"
     const val SHOP_RADIUS = "radius"

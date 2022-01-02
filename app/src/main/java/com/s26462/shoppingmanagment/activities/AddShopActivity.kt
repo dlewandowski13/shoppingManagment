@@ -45,8 +45,7 @@ class AddShopActivity : BaseActivity(), View.OnClickListener {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add_shop)
 //
-        Toast.makeText(this,"mIntent: ${intent.hasExtra(Constants.SHOPPINGLIST_DETAIL)}",
-        Toast.LENGTH_SHORT).show()
+//        Toast.makeText(this,"mIntent: ${intent.hasExtra(Constants.SHOPPINGLIST_DETAIL)}", Toast.LENGTH_SHORT).show()
 
         if(intent.hasExtra(Constants.SHOPPINGLIST_DETAIL)){
             mItem = intent.getParcelableExtra(Constants.SHOPPINGLIST_DETAIL)!!
@@ -97,8 +96,13 @@ class AddShopActivity : BaseActivity(), View.OnClickListener {
             actionBar.setHomeAsUpIndicator(R.drawable.ic_white_color_back_24dp)
             actionBar.title = resources.getString(R.string.add_Shop)
         }
-
-    toolbar_add_shop.setNavigationOnClickListener { onBackPressed() }
+//TODO wrócić do tego
+//    toolbar_add_shop.setNavigationOnClickListener { onBackPressed() }
+    toolbar_add_shop.setNavigationOnClickListener {
+            val intent = Intent(this, ShopListActivity::class.java)
+            intent.putExtra(Constants.SHOPPINGLIST_DETAIL, mItem)
+            startActivity(intent)
+            }
     }
 //  Załadowanie obrazka z galerii
     public override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -237,7 +241,7 @@ class AddShopActivity : BaseActivity(), View.OnClickListener {
 //        val shopLocation = et_shop_location.text.toString()
         var anyChangesMade = false
 
-        if (mShopImageURL.isNotEmpty() && shopName.isNotEmpty() && shopDescription.isNotEmpty()
+        if (/*mShopImageURL.isNotEmpty() &&*/ shopName.isNotEmpty() && shopDescription.isNotEmpty()
             && shopRadius.isNotEmpty()) {
             shopHashMap[Constants.SHOP_NAME] = shopName
             shopHashMap[Constants.SHOP_DESCRIPTION] = shopDescription
@@ -258,12 +262,13 @@ class AddShopActivity : BaseActivity(), View.OnClickListener {
 
     fun shopCreatedSuccess(name: String){
 //        mItem.shopList.add(shop.id)
-        Toast.makeText(this,"name: $name",Toast.LENGTH_LONG).show()
+//        Toast.makeText(this,"name: $name",Toast.LENGTH_LONG).show()
         FirestoreClass().getShopDetails(this@AddShopActivity, name)
     }
 
     fun assigneeShop(shop: Shop){
         mItem.shopList.add(shop.id)
+        Toast.makeText(this@AddShopActivity,"shopid: ${shop.id}",Toast.LENGTH_LONG).show()
         FirestoreClass().assignShopToShoppingList(this@AddShopActivity,mItem,shop)
     }
 
@@ -272,6 +277,7 @@ class AddShopActivity : BaseActivity(), View.OnClickListener {
         setResult(Activity.RESULT_OK)
         finish()
         val intent = Intent(this, ShopListActivity::class.java)
+        intent.putExtra(Constants.SHOPPINGLIST_DETAIL, mItem)
         startActivity(intent)
     }
 
