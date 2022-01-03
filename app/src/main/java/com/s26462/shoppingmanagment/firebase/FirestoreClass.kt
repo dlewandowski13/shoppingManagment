@@ -6,6 +6,7 @@ import android.widget.Toast
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.SetOptions
+import com.google.firebase.firestore.ktx.toObject
 import com.s26462.shoppingmanagment.activities.*
 import com.s26462.shoppingmanagment.models.Shop
 import com.s26462.shoppingmanagment.models.ShoppingList
@@ -17,7 +18,7 @@ import kotlin.collections.HashMap
 
 class FirestoreClass {
     private val mFireStore = FirebaseFirestore.getInstance()
-//  utworzenie użytkownika w bazie
+    //  utworzenie użytkownika w bazie
     fun registerUser(activity: SignUpActivity, userInfo: User) {
         mFireStore.collection(Constants.USERS)
             .document(getCurrentUserId())
@@ -25,18 +26,19 @@ class FirestoreClass {
             .addOnSuccessListener {
                 activity.userRegisteredSuccess()
             } .addOnFailureListener {
-                    Log.e(activity.javaClass.simpleName,"Error")
+                    e->
+                Log.e(activity.javaClass.simpleName,"Error")
             }
     }
 
-//Utworzenie pozycji listy zakupów
+    //Utworzenie pozycji listy zakupów
     fun getShoppingListItems(activity: Activity, documentId: String) {
-    mFireStore.collection(Constants.SPNGLIST)
-        .document(documentId)
-        .get()
-        .addOnSuccessListener {
-                document ->
-                Log.i(activity.javaClass.simpleName, "document: $document")
+        mFireStore.collection(Constants.SPNGLIST)
+            .document(documentId)
+            .get()
+            .addOnSuccessListener {
+                    document ->
+                Log.i(activity.javaClass.simpleName, "document: ${document.toString()}")
                 val item = document.toObject(ShoppingList::class.java)!!
                 item.documentId = document.id
                 when(activity) {
@@ -47,23 +49,23 @@ class FirestoreClass {
                         activity.updateShopingList(item)
                     }
                 }
-        }
-        .addOnFailureListener {
-                e ->
-            when(activity) {
-                is ItemListActivity -> {
-                    activity.hideProgressDialog()
-                    Log.e(activity.javaClass.simpleName, "Error while loading shopping list.", e)
-                }
-                is ShopListActivity -> {
-                    activity.hideProgressDialog()
-                    Log.e(activity.javaClass.simpleName, "Error while loading shopping list.", e)
+            }
+            .addOnFailureListener {
+                    e ->
+                when(activity) {
+                    is ItemListActivity -> {
+                        activity.hideProgressDialog()
+                        Log.e(activity.javaClass.simpleName, "Error while loading shopping list.", e)
+                    }
+                    is ShopListActivity -> {
+                        activity.hideProgressDialog()
+                        Log.e(activity.javaClass.simpleName, "Error while loading shopping list.", e)
+                    }
                 }
             }
-        }
     }
 
-//utworzenie listy zakupów w bazie
+    //utworzenie listy zakupów w bazie
     fun createShoppingList(activity: CreateShoppingListActivity, spngList: ShoppingList) {
         mFireStore.collection(Constants.SPNGLIST)
             .document()
@@ -74,18 +76,18 @@ class FirestoreClass {
                 activity.spngListCreatedSuccessfully()
             }
             .addOnFailureListener {
-                exception ->
+                    exception ->
                 activity.hideProgressDialog()
                 Log.e(activity.javaClass.simpleName, "Error while creating ShoppingList.", exception)
             }
     }
-//  pobranie listy zakupów, w zależności od uprawnień użytkownika
+    //  pobranie listy zakupów, w zależności od uprawnień użytkownika
     fun getShoppingList(activity: MainActivity){
         mFireStore.collection(Constants.SPNGLIST)
             .whereArrayContains(Constants.ASSIGNED_TO, getCurrentUserId())
             .get()
             .addOnSuccessListener {
-                document ->
+                    document ->
 //                Log.i(activity.javaClass.simpleName, "documents: ${document.documents.toString()}")
                 val shoppingLists: ArrayList<ShoppingList> = ArrayList()
                 for(i in document.documents){
@@ -96,13 +98,13 @@ class FirestoreClass {
                 activity.populateShoppingListToUI(shoppingLists)
             }
             .addOnFailureListener {
-                e ->
+                    e ->
                 activity.hideProgressDialog()
                 Log.e(activity.javaClass.simpleName, "Error while creating a ShoppingLists.", e)
             }
     }
 
-//  dodanie kategorii do bazy
+    //  dodanie kategorii do bazy
     fun addUpdateItemList(activity: ItemListActivity, shoppingList: ShoppingList) {
         val itemListHashMap = HashMap<String, Any>()
         itemListHashMap[Constants.ITEM_LIST] = shoppingList.itemList
@@ -116,17 +118,16 @@ class FirestoreClass {
                 activity.addUpdateItemSuccess()
             }
             .addOnFailureListener {
-                exception ->
+                    exception ->
                 activity.hideProgressDialog()
                 Log.e(activity.javaClass.simpleName, "Error while creating an Item.", exception)
             }
     }
 
-//metoda do dodania nowego sklepu do bazy danych, wykorzystuję HashMap
+    //metoda do dodania nowego sklepu do bazy danych, wykorzystuję HashMap
     fun createShop(activity: AddShopActivity, shopHashMap: HashMap<String, Any>) {
-    Toast.makeText(activity, "uniqueID = ${getUniqueId()}",Toast.LENGTH_LONG).show()
-    shopHashMap[Constants.SHOP_ID] = getUniqueId()
-    Log.e(activity.javaClass.simpleName,"shopHashMap: $shopHashMap")
+        Toast.makeText(activity, "uniqueID = ${getUniqueId()}",Toast.LENGTH_LONG).show()
+        shopHashMap[Constants.SHOP_ID] = getUniqueId()
         mFireStore.collection(Constants.SHOPS)
             .document()
             .set(shopHashMap)
@@ -144,7 +145,7 @@ class FirestoreClass {
             }
     }
 
-//metoda do aktualizacji danych o użytkowniku, wykorzystuję HashMap
+    //metoda do aktualizacji danych o użytkowniku, wykorzystuję HashMap
     fun updateUserProfileData(activity: MyProfileActivity, userHashMap: HashMap<String, Any>) {
         mFireStore.collection(Constants.USERS)
             .document(getCurrentUserId())
@@ -155,7 +156,7 @@ class FirestoreClass {
                 activity.profileUpdateSuccess()
             }
             .addOnFailureListener {
-                e ->
+                    e ->
                 activity.hideProgressDialog()
                 Log.e(activity.javaClass.simpleName,"Error updating the profile!",e)
                 Toast.makeText(activity,"Nie udało się zaktualizować Twoich danych.",Toast.LENGTH_LONG).show()
@@ -169,9 +170,9 @@ class FirestoreClass {
             .addOnSuccessListener { document ->
                 val loggedInUser = document.toObject(User::class.java)!!
                 when(activity) {
-                     is SignInActivity -> {
-                         activity.signInSuccess(loggedInUser)
-                     }
+                    is SignInActivity -> {
+                        activity.signInSuccess(loggedInUser)
+                    }
                     is MainActivity -> {
                         activity.updateNavigationUserDetails(loggedInUser, readShoppingList)
                     }
@@ -199,10 +200,10 @@ class FirestoreClass {
 
     }
 
-//pobranie aktualnego usera
+    //pobranie aktualnego usera
     fun getCurrentUserId(): String {
 
-        val currentUser = FirebaseAuth.getInstance().currentUser
+        var currentUser = FirebaseAuth.getInstance().currentUser
         var currentUserID = ""
         if(currentUser != null){
             currentUserID = currentUser.uid
@@ -210,20 +211,20 @@ class FirestoreClass {
         return currentUserID
     }
 
-//  generowanie unikalnego ID
+    //  generowanie unikalnego ID
     fun getUniqueId(): String{
-        val uniqueID = UUID.randomUUID().toString()
+        var uniqueID = UUID.randomUUID().toString()
         return uniqueID
     }
 
-//  pobranie z bazy wszystkich członków danej listy i przygotowanie listy userów
+    //  pobranie z bazy wszystkich członków danej listy i przygotowanie listy userów
     fun getAssignedMembersListDetails(activity: MembersActivity, assignedTo: ArrayList<String>){
         mFireStore.collection(Constants.USERS)
             .whereIn(Constants.ID, assignedTo)
             .get()
             .addOnSuccessListener {
-                document ->
-                Log.i(activity.javaClass.simpleName,"Members List: ${document.documents}")
+                    document ->
+                Log.i(activity.javaClass.simpleName,"Members List: ${document.documents.toString()}")
 
                 val usersList : ArrayList<User> = ArrayList()
 
@@ -239,14 +240,14 @@ class FirestoreClass {
             }
     }
 
-//  pobranie z bazy wszystkich członków danej listy i przygotowanie listy userów
+    //  pobranie z bazy wszystkich członków danej listy i przygotowanie listy userów
     fun getAssignedShopsListDetails(activity: ShopListActivity, shopList: ArrayList<String>){
         mFireStore.collection(Constants.SHOPS)
             .whereIn(Constants.ID, shopList)
             .get()
             .addOnSuccessListener {
                     document ->
-                Log.i(activity.javaClass.simpleName,"Members List: ${document.documents}")
+                Log.i(activity.javaClass.simpleName,"Members List: ${document.documents.toString()}")
 
                 val shopsList : ArrayList<Shop> = ArrayList()
 
@@ -286,13 +287,13 @@ class FirestoreClass {
 
     }
 
-//  pobranie użytkownika
+    //  pobranie użytkownika
     fun getMemberDetails(activity: MembersActivity, email: String) {
         mFireStore.collection(Constants.USERS)
             .whereEqualTo(Constants.EMAIL, email)
             .get()
             .addOnSuccessListener {
-                document ->
+                    document ->
                 if(document.documents.size > 0) {
                     val user = document.documents[0].toObject(User::class.java)!!
                     activity.memberDetails(user)
@@ -308,7 +309,7 @@ class FirestoreClass {
             }
 
     }
-//  przypisanie użytkownika do listy zakupów
+    //  przypisanie użytkownika do listy zakupów
     fun assignMemberToShoppingList(activity: MembersActivity, shoppingList: ShoppingList, user: User) {
         val assignedToHashMap = HashMap<String, Any>()
         assignedToHashMap[Constants.ASSIGNED_TO] = shoppingList.assignedTo
@@ -324,7 +325,7 @@ class FirestoreClass {
             }
     }
 
-//  przypisanie sklepu do listy zakupów
+    //  przypisanie sklepu do listy zakupów
     fun assignShopToShoppingList(activity: AddShopActivity, shoppingList: ShoppingList) {
         val shopHashMap = HashMap<String, Any>()
         shopHashMap[Constants.SHOP_LIST] = shoppingList.shopList

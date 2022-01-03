@@ -40,9 +40,9 @@ import java.lang.Exception
 class AddShopActivity : BaseActivity(), View.OnClickListener {
 
     companion object {
-        private const val PICK_IMAGE_REQUEST_CODE = 1
-        private const val CAMERA_REQUEST_CODE = 2
-        private const val AUTOCOMPLETE_REQUEST_CODE = 3
+        private const val PICK_IMAGE_REQUEST_CODE = 12
+        private const val CAMERA_REQUEST_CODE = 22
+        private const val AUTOCOMPLETE_REQUEST_CODE = 32
     }
     private var mSelectedImageFileUri: Uri? = null
     private var mShopImageURL : String = ""
@@ -71,7 +71,7 @@ class AddShopActivity : BaseActivity(), View.OnClickListener {
         btn_create_shop.setOnClickListener(this)
         et_shop_location.setOnClickListener(this)
 
-        FirestoreClass().loadUserData(this, false)
+//        FirestoreClass().loadUserData(this, false)
     }
 
 //  wszystkie akcje kliknięcia
@@ -238,7 +238,7 @@ class AddShopActivity : BaseActivity(), View.OnClickListener {
 //  zapisanie pliku do storage w Firebase + logi pomocnicze plus wywołanie funkcji aktualizującej dane w bazie
     private fun uploadShopImage() {
         showProgressDialog(resources.getString(R.string.please_wait))
-//        Toast.makeText(this@AddShopActivity, "mSelectedImageFileUri: $mSelectedImageFileUri", Toast.LENGTH_LONG).show()
+        Toast.makeText(this@AddShopActivity, "mSelectedImageFileUri: $mSelectedImageFileUri", Toast.LENGTH_LONG).show()
         if(mSelectedImageFileUri != null) {
             val sRef : StorageReference =
                 FirebaseStorage.getInstance().reference.child(
