@@ -52,5 +52,6 @@
     <string name="description_shop">Opis sklepu</string>
     <string name="radius_shop">Promień do powiadomień</string>
     <string name="location_shop">Lokalizacja</string>
+    <string name="create_shop">Dodaj do ulubionych</string>
 
 </resources>

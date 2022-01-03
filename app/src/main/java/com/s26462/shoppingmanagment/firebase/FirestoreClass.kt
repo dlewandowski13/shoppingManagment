@@ -6,7 +6,6 @@ import android.widget.Toast
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.SetOptions
-import com.google.firebase.firestore.ktx.toObject
 import com.s26462.shoppingmanagment.activities.*
 import com.s26462.shoppingmanagment.models.Shop
 import com.s26462.shoppingmanagment.models.ShoppingList
@@ -26,7 +25,6 @@ class FirestoreClass {
             .addOnSuccessListener {
                 activity.userRegisteredSuccess()
             } .addOnFailureListener {
-                    e->
                     Log.e(activity.javaClass.simpleName,"Error")
             }
     }
@@ -38,7 +36,7 @@ class FirestoreClass {
         .get()
         .addOnSuccessListener {
                 document ->
-                Log.i(activity.javaClass.simpleName, "document: ${document.toString()}")
+                Log.i(activity.javaClass.simpleName, "document: $document")
                 val item = document.toObject(ShoppingList::class.java)!!
                 item.documentId = document.id
                 when(activity) {
@@ -128,6 +126,7 @@ class FirestoreClass {
     fun createShop(activity: AddShopActivity, shopHashMap: HashMap<String, Any>) {
     Toast.makeText(activity, "uniqueID = ${getUniqueId()}",Toast.LENGTH_LONG).show()
     shopHashMap[Constants.SHOP_ID] = getUniqueId()
+    Log.e(activity.javaClass.simpleName,"shopHashMap: $shopHashMap")
         mFireStore.collection(Constants.SHOPS)
             .document()
             .set(shopHashMap)
@@ -203,7 +202,7 @@ class FirestoreClass {
 //pobranie aktualnego usera
     fun getCurrentUserId(): String {
 
-        var currentUser = FirebaseAuth.getInstance().currentUser
+        val currentUser = FirebaseAuth.getInstance().currentUser
         var currentUserID = ""
         if(currentUser != null){
             currentUserID = currentUser.uid
@@ -213,7 +212,7 @@ class FirestoreClass {
 
 //  generowanie unikalnego ID
     fun getUniqueId(): String{
-        var uniqueID = UUID.randomUUID().toString()
+        val uniqueID = UUID.randomUUID().toString()
         return uniqueID
     }
 
@@ -224,7 +223,7 @@ class FirestoreClass {
             .get()
             .addOnSuccessListener {
                 document ->
-                Log.i(activity.javaClass.simpleName,"Members List: ${document.documents.toString()}")
+                Log.i(activity.javaClass.simpleName,"Members List: ${document.documents}")
 
                 val usersList : ArrayList<User> = ArrayList()
 
@@ -247,7 +246,7 @@ class FirestoreClass {
             .get()
             .addOnSuccessListener {
                     document ->
-                Log.i(activity.javaClass.simpleName,"Members List: ${document.documents.toString()}")
+                Log.i(activity.javaClass.simpleName,"Members List: ${document.documents}")
 
                 val shopsList : ArrayList<Shop> = ArrayList()
 
@@ -326,7 +325,7 @@ class FirestoreClass {
     }
 
 //  przypisanie sklepu do listy zakupów
-    fun assignShopToShoppingList(activity: AddShopActivity, shoppingList: ShoppingList, shop: Shop) {
+    fun assignShopToShoppingList(activity: AddShopActivity, shoppingList: ShoppingList) {
         val shopHashMap = HashMap<String, Any>()
         shopHashMap[Constants.SHOP_LIST] = shoppingList.shopList
         Toast.makeText(activity,"shopHashMap: $shopHashMap",Toast.LENGTH_LONG).show()

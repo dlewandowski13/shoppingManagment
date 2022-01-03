@@ -164,7 +164,7 @@ class AddShopActivity : BaseActivity(), View.OnClickListener {
             }
         }
     }
-
+//TODO
 //  dodanie obrazka bezpośrednio z kamery
     private fun takePhotoFromCamera(){
     Dexter.withContext(this).withPermissions(
@@ -269,7 +269,7 @@ class AddShopActivity : BaseActivity(), View.OnClickListener {
         return MimeTypeMap.getSingleton().getExtensionFromMimeType(contentResolver.getType(uri!!))
     }
 
-//aktualizacja danych użytkownika - stworzenie HashMap dla users
+//aktualizacja danych sklepu - stworzenie HashMap dla sklepu
     private fun addShop(){
         val shopHashMap = HashMap<String, Any>()
         val shopName = et_shop_name.text.toString()
@@ -286,7 +286,7 @@ class AddShopActivity : BaseActivity(), View.OnClickListener {
             shopHashMap[Constants.SHOP_DESCRIPTION] = shopDescription
             shopHashMap[Constants.SHOP_RADIUS] = shopRadius.toLong()
             shopHashMap[Constants.SHOP_IMAGE] = mShopImageURL
-            shopHashMap[Constants.SHOP_LOCATION] = shopLocation
+//            shopHashMap[Constants.SHOP_LOCATION] = shopLocation
             shopHashMap[Constants.SHOP_LATITUDE] = mLatitude
             shopHashMap[Constants.SHOP_LONGITUDE] = mLongitude
             anyChangesMade = true
@@ -311,7 +311,7 @@ class AddShopActivity : BaseActivity(), View.OnClickListener {
     fun assigneeShop(shop: Shop){
         mItem.shopList.add(shop.id)
         Toast.makeText(this@AddShopActivity,"shopid: ${shop.id}",Toast.LENGTH_LONG).show()
-        FirestoreClass().assignShopToShoppingList(this@AddShopActivity,mItem,shop)
+        FirestoreClass().assignShopToShoppingList(this@AddShopActivity,mItem)
     }
 
     fun shopAssignedSuccess(){

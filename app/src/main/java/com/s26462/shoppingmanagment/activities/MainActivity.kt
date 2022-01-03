@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.google.android.material.navigation.NavigationView
 import com.google.firebase.auth.FirebaseAuth
+import com.s26462.shoppingmanagment.MapsFragment
 import com.s26462.shoppingmanagment.R
 import com.s26462.shoppingmanagment.adapters.ShoppingListItemAdapter
 import com.s26462.shoppingmanagment.firebase.FirestoreClass
@@ -133,6 +134,13 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
                 startActivityForResult(Intent(this, MyProfileActivity::class.java),
                     MY_PROFILE_REQUEST_CODE)
             }
+
+            R.id.nav_maps -> {
+                val intent = Intent(this, MapActivity::class.java)
+//                TODO przekazać współrzędne lokalizacji
+                startActivity(intent)
+            }
+
             R.id.nav_sign_out -> {
                 FirebaseAuth.getInstance().signOut()
 

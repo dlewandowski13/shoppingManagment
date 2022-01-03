@@ -29,7 +29,6 @@ open class ShopListAdapter(private val context: Context, private var list: Array
         val model = list[position]
 
         if (holder is MyViewHolder) {
-
             Glide
                 .with(context)
                 .load(model.image)
@@ -40,7 +39,21 @@ open class ShopListAdapter(private val context: Context, private var list: Array
             holder.itemView.tv_shop_name.text = model.name
             holder.itemView.tv_description_shop.text = model.description
             holder.itemView.tv_radius_shop.text = model.radius.toString()
+
+            holder.itemView.setOnClickListener{
+                if(onClickListener != null) {
+                    onClickListener!!.onClick(position,model)
+                }
+            }
         }
+    }
+
+    interface OnClickListener {
+        fun onClick(position: Int, model: Shop)
+    }
+
+    fun setOnClickListener(onClickListener: OnClickListener){
+        this.onClickListener = onClickListener
     }
 
     override fun getItemCount(): Int {
@@ -49,11 +62,4 @@ open class ShopListAdapter(private val context: Context, private var list: Array
 
     class MyViewHolder(view: View) : RecyclerView.ViewHolder(view)
 
-    fun setOnClickListener(onClickListener: OnClickListener){
-        this.onClickListener = onClickListener
-    }
-
-    interface OnClickListener {
-        fun onClick(position: Int, model: Shop)
-    }
 }

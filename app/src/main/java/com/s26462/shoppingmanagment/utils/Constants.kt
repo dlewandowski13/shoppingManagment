@@ -21,9 +21,6 @@ object Constants {
     const val SHOPPINGLIST_DETAIL: String = "shoppinglist_detail"
     const val ID: String = "id"
 
-//  lista sklepów
-    const val SHOPLIST_ID: String = "id"
-
 //  obiekt sklep
     const val SHOPS = "shops"
 //  pola w obiekcie shop
@@ -35,5 +32,9 @@ object Constants {
     const val SHOP_LOCATION = "location"
     const val SHOP_LATITUDE = "latitude"
     const val SHOP_LONGITUDE = "longitude"
+    const val SHOP_DETAIL = "shop_detail"
+
+//  mapy
+    const val ZOOM_MAP = 17F
 
 }

@@ -11,19 +11,19 @@
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         android:background="@color/colorPrimary"
-        android:theme="@style/Theme.PopupOverlay"
+        android:theme="@style/Theme.AppBarOverlay"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
+        app:layout_constraintTop_toTopOf="parent" />
 
     <fragment
         android:id="@+id/map"
-        class = "com.google.android.gms.maps.SupportMapFragment"
+        class="com.google.android.gms.maps.SupportMapFragment"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/toolbar_map"/>
+        app:layout_constraintTop_toBottomOf="@id/toolbar_map" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
