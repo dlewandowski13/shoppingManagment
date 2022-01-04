@@ -38,7 +38,7 @@ import java.io.IOException
 import java.lang.Exception
 
 class AddShopActivity : BaseActivity(), View.OnClickListener {
-
+//TODO !!!!Obsługa dodania ulubionego sklepu i przypisania sklepu do listy!!!!
     companion object {
         private const val PICK_IMAGE_REQUEST_CODE = 12
         private const val CAMERA_REQUEST_CODE = 22
