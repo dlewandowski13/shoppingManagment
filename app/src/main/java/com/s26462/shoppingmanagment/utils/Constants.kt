@@ -33,6 +33,7 @@ object Constants {
     const val SHOP_LATITUDE = "latitude"
     const val SHOP_LONGITUDE = "longitude"
     const val SHOP_DETAIL = "shop_detail"
+    const val SHOP_ASSIGNED_TO = "assignedTo"
 
 //  mapy
     const val ZOOM_MAP = 17F

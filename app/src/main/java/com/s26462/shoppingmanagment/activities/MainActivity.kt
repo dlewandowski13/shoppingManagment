@@ -135,9 +135,16 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
                     MY_PROFILE_REQUEST_CODE)
             }
 
+            R.id.nav_favourite_shops -> {
+                val intent = Intent(this, ShopListActivity::class.java)
+//                intent.putExtra("ManyLocation", true)
+                startActivity(intent)
+            }
+
             R.id.nav_maps -> {
                 val intent = Intent(this, MapActivity::class.java)
-//                TODO przekazać współrzędne lokalizacji
+                intent.putExtra("ManyLocation", true)
+//  TODO przekazać współrzędne lokalizacji
                 startActivity(intent)
             }
 

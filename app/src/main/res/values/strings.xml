@@ -53,5 +53,6 @@
     <string name="radius_shop">Promień do powiadomień</string>
     <string name="location_shop">Lokalizacja</string>
     <string name="create_shop">Dodaj do ulubionych</string>
+    <string name="nav_favourite_shops">Ulubione sklepy</string>
 
 </resources>

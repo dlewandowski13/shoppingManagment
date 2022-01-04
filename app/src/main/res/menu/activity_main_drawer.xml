@@ -7,6 +7,10 @@
             android:icon="@drawable/ic_nav_user"
             android:title="@string/nav_my_profile"/>
         <item
+            android:id="@+id/nav_favourite_shops"
+            android:icon="@drawable/ic_baseline_shopping_cart_24"
+            android:title="@string/nav_favourite_shops"/>
+        <item
             android:id="@+id/nav_maps"
             android:icon="@drawable/ic_baseline_map_24"
             android:title="@string/nav_maps"/>

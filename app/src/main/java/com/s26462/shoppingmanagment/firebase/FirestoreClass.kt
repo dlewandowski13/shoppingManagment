@@ -6,7 +6,6 @@ import android.widget.Toast
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.SetOptions
-import com.google.firebase.firestore.ktx.toObject
 import com.s26462.shoppingmanagment.activities.*
 import com.s26462.shoppingmanagment.models.Shop
 import com.s26462.shoppingmanagment.models.ShoppingList
@@ -31,7 +30,7 @@ class FirestoreClass {
             }
     }
 
-    //Utworzenie pozycji listy zakupów
+    //pobranie pozycji listy zakupów
     fun getShoppingListItems(activity: Activity, documentId: String) {
         mFireStore.collection(Constants.SPNGLIST)
             .document(documentId)
@@ -46,7 +45,7 @@ class FirestoreClass {
                         activity.itemList(item)
                     }
                     is ShopListActivity -> {
-                        activity.updateShopingList(item)
+                        activity.getShopList(item)
                     }
                 }
             }
@@ -96,6 +95,29 @@ class FirestoreClass {
                     shoppingLists.add(shoppingList)
                 }
                 activity.populateShoppingListToUI(shoppingLists)
+            }
+            .addOnFailureListener {
+                    e ->
+                activity.hideProgressDialog()
+                Log.e(activity.javaClass.simpleName, "Error while creating a ShoppingLists.", e)
+            }
+    }
+
+    //  pobranie listy sklepów, w zależności od uprawnień użytkownika
+    fun getShopList(activity: ShopListActivity){
+        mFireStore.collection(Constants.SHOPS)
+            .whereArrayContains(Constants.SHOP_ASSIGNED_TO, getCurrentUserId())
+            .get()
+            .addOnSuccessListener {
+                    document ->
+//                Log.i(activity.javaClass.simpleName, "documents: ${document.documents.toString()}")
+                val shopsLists: ArrayList<Shop> = ArrayList()
+                for(i in document.documents){
+                    var shopList = i.toObject(Shop::class.java)!!
+                    shopList.id = i.id
+                    shopsLists.add(shopList)
+                }
+                activity.setupShopList(shopsLists)
             }
             .addOnFailureListener {
                     e ->
@@ -240,7 +262,7 @@ class FirestoreClass {
             }
     }
 
-    //  pobranie z bazy wszystkich członków danej listy i przygotowanie listy userów
+    //  pobranie z bazy szczegółów pojedynczego sklepu
     fun getAssignedShopsListDetails(activity: ShopListActivity, shopList: ArrayList<String>){
         mFireStore.collection(Constants.SHOPS)
             .whereIn(Constants.ID, shopList)
@@ -259,7 +281,7 @@ class FirestoreClass {
             }
             .addOnFailureListener { e ->
                 activity.hideProgressDialog()
-                Log.e(activity.javaClass.simpleName,"Error while getting members.",e)
+                Log.e(activity.javaClass.simpleName,"Error while getting shops.",e)
             }
     }
 

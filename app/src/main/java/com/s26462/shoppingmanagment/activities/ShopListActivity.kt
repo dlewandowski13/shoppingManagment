@@ -24,10 +24,15 @@ class ShopListActivity : BaseActivity(), NavigationView.OnNavigationItemSelected
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_shop_list)
 
+//      w zależności od miejsca, z którego wywoływany jest ten intent
+//      albo pobieramy do listy zakupów, albo do użytkownika
         if(intent.hasExtra(Constants.SHOPPINGLIST_DETAIL)){
             mShopingList = intent.getParcelableExtra(Constants.SHOPPINGLIST_DETAIL)!!
 //
             FirestoreClass().getShoppingListItems(this,mShopingList.documentId)
+        } else {
+            showProgressDialog(resources.getString(R.string.please_wait))
+            FirestoreClass().getShopList(this)
         }
         setupActionBar()
 
@@ -44,7 +49,9 @@ class ShopListActivity : BaseActivity(), NavigationView.OnNavigationItemSelected
 //                TODO jakoś ładniej zrobić to odświeżanie niż przez finish()
 //                Toast.makeText(this@ShopListActivity, "mShop: $mShop",Toast.LENGTH_LONG).show()
                 val intentAddShop = Intent(this, AddShopActivity::class.java)
-                intentAddShop.putExtra(Constants.SHOPPINGLIST_DETAIL, mShopingList)
+                if(intent.hasExtra(Constants.SHOPPINGLIST_DETAIL)) {
+                    intentAddShop.putExtra(Constants.SHOPPINGLIST_DETAIL, mShopingList)
+                }
                 startActivity(intentAddShop)
                 finish()
                 return true
@@ -87,7 +94,7 @@ class ShopListActivity : BaseActivity(), NavigationView.OnNavigationItemSelected
         })
     }
 
-    fun updateShopingList(shoppingList: ShoppingList){
+    fun getShopList(shoppingList: ShoppingList){
         mShopingList = shoppingList
 
         if (mShopingList.shopList.isNotEmpty()) {

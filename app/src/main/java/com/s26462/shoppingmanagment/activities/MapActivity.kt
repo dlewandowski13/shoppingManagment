@@ -1,5 +1,6 @@
 package com.s26462.shoppingmanagment.activities
 
+import android.content.ActivityNotFoundException
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.gms.maps.CameraUpdateFactory
@@ -39,19 +40,24 @@ class MapActivity : BaseActivity(), OnMapReadyCallback {
             supportFragmentManager.findFragmentById(R.id.map) as SupportMapFragment
 
         supportMapFragment.getMapAsync(this)
-
     }
 
     override fun onMapReady(googleMap: GoogleMap) {
-        val position = LatLng(mShopDetail!!.latitude,mShopDetail!!.longitude)
-        val radius = mShopDetail!!.radius.toDouble()
 
-        googleMap!!.addCircle(CircleOptions()
-            .center(position)
-            .radius(radius))
+        if(intent.hasExtra("ManyLocation")){
 
-        val newLatLngZoom = CameraUpdateFactory.newLatLngZoom(position,Constants.ZOOM_MAP)
-        googleMap.animateCamera(newLatLngZoom)
+        } else {
+            val position = LatLng(mShopDetail!!.latitude, mShopDetail!!.longitude)
+            val radius = mShopDetail!!.radius.toDouble()
 
+            googleMap!!.addCircle(
+                CircleOptions()
+                    .center(position)
+                    .radius(radius)
+            )
+
+            val newLatLngZoom = CameraUpdateFactory.newLatLngZoom(position, Constants.ZOOM_MAP)
+            googleMap.animateCamera(newLatLngZoom)
+        }
     }
 }
