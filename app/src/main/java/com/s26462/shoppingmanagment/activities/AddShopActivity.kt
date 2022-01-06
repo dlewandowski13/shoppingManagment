@@ -30,6 +30,7 @@ import com.s26462.shoppingmanagment.R
 import com.s26462.shoppingmanagment.firebase.FirestoreClass
 import com.s26462.shoppingmanagment.models.Shop
 import com.s26462.shoppingmanagment.models.ShoppingList
+import com.s26462.shoppingmanagment.models.User
 import com.s26462.shoppingmanagment.utils.Constants
 import kotlinx.android.synthetic.main.activity_add_shop.*
 import kotlinx.android.synthetic.main.activity_my_profile.*
@@ -49,6 +50,7 @@ class AddShopActivity : BaseActivity(), View.OnClickListener {
     private lateinit var mItem: ShoppingList
     private var mLatitude: Double = 0.0
     private var mLongitude: Double = 0.0
+    private var mFavourite = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -63,6 +65,9 @@ class AddShopActivity : BaseActivity(), View.OnClickListener {
 
         if(intent.hasExtra(Constants.SHOPPINGLIST_DETAIL)){
             mItem = intent.getParcelableExtra(Constants.SHOPPINGLIST_DETAIL)!!
+            btn_create_shop.text = "Dodaj do listy"
+        } else {
+            mFavourite = true
         }
 
         setupActionBar()
@@ -131,7 +136,9 @@ class AddShopActivity : BaseActivity(), View.OnClickListener {
 //    toolbar_add_shop.setNavigationOnClickListener { onBackPressed() }
     toolbar_add_shop.setNavigationOnClickListener {
             val intent = Intent(this, ShopListActivity::class.java)
-            intent.putExtra(Constants.SHOPPINGLIST_DETAIL, mItem)
+            if (!mFavourite) {
+                intent.putExtra(Constants.SHOPPINGLIST_DETAIL, mItem)
+            }
             startActivity(intent)
             }
     }
@@ -276,6 +283,8 @@ class AddShopActivity : BaseActivity(), View.OnClickListener {
         val shopDescription = et_shop_descrioption.text.toString()
         val shopRadius = et_shop_radius.text.toString()
         val shopLocation = et_shop_location.text.toString()
+        val shopAssignedTo = FirestoreClass().getCurrentUserId()
+
 //    TODO cała obsługa lokalizacji zostawiam, jak do tego dojdę
 //        val shopLocation = et_shop_location.text.toString()
         var anyChangesMade = false
@@ -286,7 +295,9 @@ class AddShopActivity : BaseActivity(), View.OnClickListener {
             shopHashMap[Constants.SHOP_DESCRIPTION] = shopDescription
             shopHashMap[Constants.SHOP_RADIUS] = shopRadius.toLong()
             shopHashMap[Constants.SHOP_IMAGE] = mShopImageURL
-//            shopHashMap[Constants.SHOP_LOCATION] = shopLocation
+            if (mFavourite) {
+                shopHashMap[Constants.SHOP_ASSIGNED_TO] = shopAssignedTo
+            }
             shopHashMap[Constants.SHOP_LATITUDE] = mLatitude
             shopHashMap[Constants.SHOP_LONGITUDE] = mLongitude
             anyChangesMade = true
@@ -305,7 +316,11 @@ class AddShopActivity : BaseActivity(), View.OnClickListener {
     fun shopCreatedSuccess(name: String){
 //        mItem.shopList.add(shop.id)
 //        Toast.makeText(this,"name: $name",Toast.LENGTH_LONG).show()
-        FirestoreClass().getShopDetails(this@AddShopActivity, name)
+        if (mFavourite){
+            shopAssignedSuccess()
+        }else {
+            FirestoreClass().getShopDetails(this@AddShopActivity, name)
+        }
     }
 
     fun assigneeShop(shop: Shop){
@@ -319,7 +334,9 @@ class AddShopActivity : BaseActivity(), View.OnClickListener {
         setResult(Activity.RESULT_OK)
         finish()
         val intent = Intent(this, ShopListActivity::class.java)
-        intent.putExtra(Constants.SHOPPINGLIST_DETAIL, mItem)
+        if(!mFavourite) {
+            intent.putExtra(Constants.SHOPPINGLIST_DETAIL, mItem)
+        }
         startActivity(intent)
     }
 

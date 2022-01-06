@@ -38,4 +38,6 @@ object Constants {
 //  mapy
     const val ZOOM_MAP = 17F
 
+    const val ZOOM_MAP_LIST = 10F
+
 }

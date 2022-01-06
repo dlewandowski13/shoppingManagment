@@ -11,7 +11,7 @@ data class Shop (
     val image: String = "",
     var latitude: Double = 0.0,
     var longitude: Double = 0.0,
-    val assignedTo: ArrayList<String> = ArrayList()
+    val assignedTo: String = ""
         ): Parcelable {
     constructor(parcel: Parcel) : this(
         parcel.readString()!!,
@@ -21,7 +21,7 @@ data class Shop (
         parcel.readString()!!,
         parcel.readDouble()!!,
         parcel.readDouble()!!,
-        parcel.createStringArrayList()!!
+        parcel.readString()!!
     ) {
     }
 
@@ -33,7 +33,7 @@ data class Shop (
         writeString(image)
         writeDouble(latitude)
         writeDouble(longitude)
-        writeStringList(assignedTo)
+        writeString(assignedTo)
     }
 
     override fun describeContents(): Int {

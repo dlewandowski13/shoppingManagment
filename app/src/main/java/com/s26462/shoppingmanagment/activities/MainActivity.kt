@@ -15,6 +15,7 @@ import com.s26462.shoppingmanagment.MapsFragment
 import com.s26462.shoppingmanagment.R
 import com.s26462.shoppingmanagment.adapters.ShoppingListItemAdapter
 import com.s26462.shoppingmanagment.firebase.FirestoreClass
+import com.s26462.shoppingmanagment.models.Shop
 import com.s26462.shoppingmanagment.models.ShoppingList
 import com.s26462.shoppingmanagment.models.User
 import com.s26462.shoppingmanagment.utils.Constants
@@ -137,15 +138,11 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
 
             R.id.nav_favourite_shops -> {
                 val intent = Intent(this, ShopListActivity::class.java)
-//                intent.putExtra("ManyLocation", true)
                 startActivity(intent)
             }
 
             R.id.nav_maps -> {
-                val intent = Intent(this, MapActivity::class.java)
-                intent.putExtra("ManyLocation", true)
-//  TODO przekazać współrzędne lokalizacji
-                startActivity(intent)
+                FirestoreClass().getShopList(this)
             }
 
             R.id.nav_sign_out -> {
@@ -159,6 +156,13 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
         }
         drawer_layout.closeDrawer(GravityCompat.START)
         return true
+    }
+
+    fun loadShopListToMap(shopsLists: ArrayList<Shop>) {
+        val intent = Intent(this, MapActivity::class.java)
+        Log.e(this.javaClass.simpleName, "shopList: $shopsLists")
+        intent.putExtra(Constants.SHOPS, shopsLists)
+        startActivity(intent)
     }
 
 }

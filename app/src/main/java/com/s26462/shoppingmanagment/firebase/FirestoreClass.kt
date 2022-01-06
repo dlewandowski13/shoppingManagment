@@ -104,25 +104,45 @@ class FirestoreClass {
     }
 
     //  pobranie listy sklepów, w zależności od uprawnień użytkownika
-    fun getShopList(activity: ShopListActivity){
+    fun getShopList(activity: Activity){
         mFireStore.collection(Constants.SHOPS)
-            .whereArrayContains(Constants.SHOP_ASSIGNED_TO, getCurrentUserId())
+            .whereEqualTo(Constants.SHOP_ASSIGNED_TO, getCurrentUserId())
             .get()
             .addOnSuccessListener {
                     document ->
-//                Log.i(activity.javaClass.simpleName, "documents: ${document.documents.toString()}")
+//                Log.e(activity.javaClass.simpleName, "shops_documents: ${document.documents.toString()}")
                 val shopsLists: ArrayList<Shop> = ArrayList()
                 for(i in document.documents){
                     var shopList = i.toObject(Shop::class.java)!!
                     shopList.id = i.id
                     shopsLists.add(shopList)
+//                    Log.e(activity.javaClass.simpleName, "shopList: $shopList")
                 }
-                activity.setupShopList(shopsLists)
+//                document.documents[0].toObject(User::class.java)!!
+                when(activity) {
+                    is ShopListActivity -> {
+//                        Log.e(activity.javaClass.simpleName, "shopsLists: $shopsLists")
+                        activity.setupShopList(shopsLists)
+                    }
+                    is MainActivity -> {
+                    Log.e(activity.javaClass.simpleName, "shopList: $shopsLists")
+                        activity.loadShopListToMap(shopsLists)
+//  TODO przekazanie danych do MainActivity
+                    }
+                }
             }
             .addOnFailureListener {
                     e ->
-                activity.hideProgressDialog()
-                Log.e(activity.javaClass.simpleName, "Error while creating a ShoppingLists.", e)
+                when(activity) {
+                    is ShopListActivity -> {
+                        activity.hideProgressDialog()
+                        Log.e(activity.javaClass.simpleName,"Error while creating a ShoppingLists.",e)
+                    }
+                    is MainActivity -> {
+                        activity.hideProgressDialog()
+                        Log.e(activity.javaClass.simpleName,"Error while creating a ShoppingLists.",e)
+                    }
+                }
             }
     }
 
@@ -158,6 +178,7 @@ class FirestoreClass {
                 Toast.makeText(activity,"Sklep został dodany!", Toast.LENGTH_LONG).show()
                 val name = shopHashMap[Constants.SHOP_NAME].toString()
                 activity.shopCreatedSuccess(name)
+
             }
             .addOnFailureListener {
                     e ->
