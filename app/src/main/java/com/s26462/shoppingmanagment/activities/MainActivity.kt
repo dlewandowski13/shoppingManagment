@@ -1,16 +1,26 @@
 package com.s26462.shoppingmanagment.activities
 
+import android.Manifest
 import android.app.Activity
+import android.content.ActivityNotFoundException
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
+import android.provider.Settings
 import android.util.Log
 import android.view.MenuItem
 import android.view.View
+import androidx.appcompat.app.AlertDialog
 import androidx.core.view.GravityCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.google.android.material.navigation.NavigationView
 import com.google.firebase.auth.FirebaseAuth
+import com.karumi.dexter.Dexter
+import com.karumi.dexter.MultiplePermissionsReport
+import com.karumi.dexter.PermissionToken
+import com.karumi.dexter.listener.PermissionRequest
+import com.karumi.dexter.listener.multi.MultiplePermissionsListener
 import com.s26462.shoppingmanagment.MapsFragment
 import com.s26462.shoppingmanagment.R
 import com.s26462.shoppingmanagment.adapters.ShoppingListItemAdapter
@@ -31,6 +41,8 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
     }
 
     private lateinit var mUsername: String
+    private val mPermissionMessage = "Brak wymaganych uprawnień do dostępu do lokalizacji. " +
+            "Możesz dodać je później w ustawieniach aplikacji, albo przejść do nich teraz."
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -142,7 +154,7 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
             }
 
             R.id.nav_maps -> {
-                FirestoreClass().getShopList(this)
+                isLocationPermissionGranted()
             }
 
             R.id.nav_sign_out -> {
@@ -165,4 +177,21 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
         startActivity(intent)
     }
 
+    private fun isLocationPermissionGranted() {
+        Dexter.withContext(this).withPermissions(
+            Manifest.permission.ACCESS_FINE_LOCATION,
+            Manifest.permission.ACCESS_COARSE_LOCATION
+        ).withListener(object: MultiplePermissionsListener {
+            override fun onPermissionsChecked(report: MultiplePermissionsReport) {
+                if(report!!.areAllPermissionsGranted()){
+                    FirestoreClass().getShopList(this@MainActivity)
+                }
+            }
+            override fun onPermissionRationaleShouldBeShown(permissions: MutableList<PermissionRequest>,
+                                                            token: PermissionToken
+            ) {
+                showRationalDialogForPermissions(mPermissionMessage)
+            }
+        }).onSameThread().check()
+    }
 }

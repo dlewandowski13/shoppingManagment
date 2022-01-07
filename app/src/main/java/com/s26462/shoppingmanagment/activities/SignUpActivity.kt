@@ -65,8 +65,6 @@ class SignUpActivity : BaseActivity() {
                 .createUserWithEmailAndPassword(email,password).addOnCompleteListener { task ->
                     if (task.isSuccessful) {
                         val firebaseUser: FirebaseUser = task.result!!.user!!
-//                        pobranie adresu email
-                        val registeredEmail  = firebaseUser.email!!
                         val user = User(firebaseUser.uid,name,email,password)
                         FirestoreClass().registerUser(this,user)
                     } else{

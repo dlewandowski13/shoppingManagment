@@ -52,6 +52,9 @@ class AddShopActivity : BaseActivity(), View.OnClickListener {
     private var mLongitude: Double = 0.0
     private var mFavourite = false
 
+    private val mPermissionMessage = "Brak wymaganych uprawnień do skorzystania z tej funkcji. " +
+            "Możesz dodać je później w ustawieniach aplikacji, albo przejść do nich teraz."
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add_shop)
@@ -186,7 +189,8 @@ class AddShopActivity : BaseActivity(), View.OnClickListener {
         }
         override fun onPermissionRationaleShouldBeShown(permissions: MutableList<PermissionRequest>,
                                                         token: PermissionToken) {
-            showRationalDialogForPermissions()
+
+            showRationalDialogForPermissions(mPermissionMessage)
         }
     }).onSameThread().check()
     }
@@ -204,31 +208,32 @@ class AddShopActivity : BaseActivity(), View.OnClickListener {
             }
             override fun onPermissionRationaleShouldBeShown(permissions: MutableList<PermissionRequest>,
                                                             token: PermissionToken) {
-                showRationalDialogForPermissions()
+                showRationalDialogForPermissions(mPermissionMessage)
             }
         }).onSameThread().check()
     }
-    private fun showRationalDialogForPermissions(){
-//        Toast.makeText(this@AddShopActivity, "galeria", Toast.LENGTH_SHORT).show()
-        AlertDialog.Builder(this)
-            .setMessage("Brak wymaganych uprawnień do skorzystania z tej funkcji. " +
-                    "Możesz dodać je później w ustawieniach aplikacji, albo przejść do nich teraz.")
-            .setPositiveButton("PRZEJDŹ DO USTAWIEŃ"){
-                _, _ ->
-                    try {
-                        val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS)
-                        val uri = Uri.fromParts("package",packageName, null)
-                        intent.data = uri
-                        startActivity(intent)
-                    } catch (e: ActivityNotFoundException) {
-                        e.printStackTrace()
-                    }
-            }
-            .setNegativeButton("Zamknij"){
-                dialog, _ ->
-                dialog.dismiss()
-            }.show()
-    }
+
+//    private fun showRationalDialogForPermissions(){
+////        Toast.makeText(this@AddShopActivity, "galeria", Toast.LENGTH_SHORT).show()
+//        AlertDialog.Builder(this)
+//            .setMessage("Brak wymaganych uprawnień do skorzystania z tej funkcji. " +
+//                    "Możesz dodać je później w ustawieniach aplikacji, albo przejść do nich teraz.")
+//            .setPositiveButton("PRZEJDŹ DO USTAWIEŃ"){
+//                _, _ ->
+//                    try {
+//                        val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS)
+//                        val uri = Uri.fromParts("package",packageName, null)
+//                        intent.data = uri
+//                        startActivity(intent)
+//                    } catch (e: ActivityNotFoundException) {
+//                        e.printStackTrace()
+//                    }
+//            }
+//            .setNegativeButton("Zamknij"){
+//                dialog, _ ->
+//                dialog.dismiss()
+//            }.show()
+//    }
 
     private fun showImageChooser(){
         var galleryIntent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)

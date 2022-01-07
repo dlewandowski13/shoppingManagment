@@ -4,6 +4,8 @@ import android.content.ActivityNotFoundException
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
+import com.google.android.gms.location.GeofencingClient
+import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
@@ -21,6 +23,7 @@ class MapActivity : BaseActivity(), OnMapReadyCallback {
 
     private var mShopDetail: Shop? = null
     private var mShopList: ArrayList<Shop>? = null
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -55,6 +58,7 @@ class MapActivity : BaseActivity(), OnMapReadyCallback {
 
     override fun onMapReady(googleMap: GoogleMap) {
         Log.e(this.javaClass.simpleName, "mShopList: $mShopList")
+
         if(mShopList != null){
             for(i in mShopList!!.indices) {
                 Log.e(this.javaClass.simpleName, "mShopList!![i].latitude: ${mShopList!![i].latitude}")
@@ -86,4 +90,6 @@ class MapActivity : BaseActivity(), OnMapReadyCallback {
             googleMap.animateCamera(newLatLngZoom)
         }
     }
+
+
 }

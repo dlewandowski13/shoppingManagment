@@ -103,7 +103,7 @@ class FirestoreClass {
             }
     }
 
-    //  pobranie listy sklepów, w zależności od uprawnień użytkownika
+    //  pobranie listy sklepów
     fun getShopList(activity: Activity){
         mFireStore.collection(Constants.SHOPS)
             .whereEqualTo(Constants.SHOP_ASSIGNED_TO, getCurrentUserId())
@@ -128,6 +128,10 @@ class FirestoreClass {
                     Log.e(activity.javaClass.simpleName, "shopList: $shopsLists")
                         activity.loadShopListToMap(shopsLists)
 //  TODO przekazanie danych do MainActivity
+                    }
+                    is BaseActivity -> {
+                        Log.e(activity.javaClass.simpleName, "shopList: $shopsLists")
+                        activity.GeofenceList(shopsLists)
                     }
                 }
             }
@@ -190,6 +194,7 @@ class FirestoreClass {
 
     //metoda do aktualizacji danych o użytkowniku, wykorzystuję HashMap
     fun updateUserProfileData(activity: MyProfileActivity, userHashMap: HashMap<String, Any>) {
+        Log.e(activity.javaClass.simpleName,"userHashMap: $userHashMap")
         mFireStore.collection(Constants.USERS)
             .document(getCurrentUserId())
             .update(userHashMap)

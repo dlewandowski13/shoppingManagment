@@ -40,4 +40,7 @@ object Constants {
 
     const val ZOOM_MAP_LIST = 10F
 
+//  geofence
+    const val GEOFENCE_EXPIRATION_IN_MILLISECONDS = 10000L
+
 }

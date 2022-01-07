@@ -1,11 +1,17 @@
 package com.s26462.shoppingmanagment.activities
 
+import android.Manifest
 import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.navigation.NavigationView
+import com.karumi.dexter.Dexter
+import com.karumi.dexter.MultiplePermissionsReport
+import com.karumi.dexter.PermissionToken
+import com.karumi.dexter.listener.PermissionRequest
+import com.karumi.dexter.listener.multi.MultiplePermissionsListener
 import com.s26462.shoppingmanagment.R
 import com.s26462.shoppingmanagment.adapters.ShoppingListItemAdapter
 import com.s26462.shoppingmanagment.firebase.FirestoreClass
@@ -19,6 +25,9 @@ class ShopListActivity : BaseActivity(), NavigationView.OnNavigationItemSelected
     // TODO do przerobienia, żeby w tym miejscu wybierać listę sklepów, a tworzyć z głównego menu
     private lateinit var mShopingList: ShoppingList
     private lateinit var mShopList: ArrayList<Shop>
+    private val mPermissionMessage = "Brak wymaganych uprawnień do dostępu do lokalizacji. " +
+            "Możesz dodać je później w ustawieniach aplikacji, albo przejść do nich teraz."
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -89,7 +98,7 @@ class ShopListActivity : BaseActivity(), NavigationView.OnNavigationItemSelected
             override fun onClick(position: Int, model: Shop) {
                 val intent = Intent(this@ShopListActivity, MapActivity::class.java)
                 intent.putExtra(Constants.SHOP_DETAIL, model)
-                startActivity(intent)
+                isLocationPermissionGranted(intent)
             }
         })
     }
@@ -116,5 +125,23 @@ class ShopListActivity : BaseActivity(), NavigationView.OnNavigationItemSelected
 //            }
 //        }
         return super.onOptionsItemSelected(item)
+    }
+
+    private fun isLocationPermissionGranted(intent: Intent) {
+        Dexter.withContext(this).withPermissions(
+            Manifest.permission.ACCESS_FINE_LOCATION,
+            Manifest.permission.ACCESS_COARSE_LOCATION
+        ).withListener(object: MultiplePermissionsListener {
+            override fun onPermissionsChecked(report: MultiplePermissionsReport) {
+                if(report!!.areAllPermissionsGranted()){
+                    startActivity(intent)
+                }
+            }
+            override fun onPermissionRationaleShouldBeShown(permissions: MutableList<PermissionRequest>,
+                                                            token: PermissionToken
+            ) {
+                showRationalDialogForPermissions(mPermissionMessage)
+            }
+        }).onSameThread().check()
     }
 }
