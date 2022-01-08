@@ -127,10 +127,9 @@ class FirestoreClass {
                     is MainActivity -> {
                     Log.e(activity.javaClass.simpleName, "shopList: $shopsLists")
                         activity.loadShopListToMap(shopsLists)
-//  TODO przekazanie danych do MainActivity
                     }
-                    is BaseActivity -> {
-                        Log.e(activity.javaClass.simpleName, "shopList: $shopsLists")
+                    is MapActivity -> {
+                        Log.e(activity.javaClass.simpleName, "shopsList: $shopsLists")
                         activity.GeofenceList(shopsLists)
                     }
                 }

@@ -16,6 +16,7 @@ import com.google.android.gms.location.Geofence
 import com.google.android.gms.location.GeofencingClient
 import com.google.android.gms.location.GeofencingRequest
 import com.google.android.gms.location.LocationServices
+import com.google.android.gms.maps.model.LatLng
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth
 import com.s26462.shoppingmanagment.R
@@ -28,8 +29,6 @@ open class BaseActivity : AppCompatActivity() {
     //zamknięcie aplikacji
     private var doubleBackToExitPressedOnce = false
 
-    lateinit var geofencingClient: GeofencingClient
-
     //pasek postępu
     private lateinit var mProgressDialog: Dialog
 
@@ -37,7 +36,6 @@ open class BaseActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_base)
 
-        geofencingClient = LocationServices.getGeofencingClient(this)
     }
 
 
@@ -115,37 +113,7 @@ open class BaseActivity : AppCompatActivity() {
                 dialog.dismiss()
             }.show()
     }
-//  utworzenie geofence
-    fun GeofenceList(shopsLists : ArrayList<Shop>){
-    var geofenceList: Geofence?
-        for(i in shopsLists){
-                Geofence.Builder()
-                // Set the request ID of the geofence. This is a string to identify this
-                // geofence.
-                .setRequestId(i.id)
-                // Set the circular region of this geofence.
-                .setCircularRegion(
-                    i.latitude,
-                    i.longitude,
-                    i.radius.toFloat()
-                )
-                // Set the expiration duration of the geofence. This geofence gets automatically
-                // removed after this period of time.
-                .setExpirationDuration(Constants.GEOFENCE_EXPIRATION_IN_MILLISECONDS)
-                // Set the transition types of interest. Alerts are only generated for these
-                // transition. We track entry and exit transitions in this sample.
-                .setTransitionTypes(Geofence.GEOFENCE_TRANSITION_ENTER or Geofence.GEOFENCE_TRANSITION_EXIT)
-                // Create the geofence.
-                .build()
-        }
-    }
 
-    private fun buildGeofencingRequest(geofence: Geofence): GeofencingRequest {
-        return GeofencingRequest.Builder()
-            .setInitialTrigger(0)
-            .addGeofences(listOf(geofence))
-            .build()
-    }
 
 //    fun add(reminder: Reminder,
 //            success: () -> Unit,
