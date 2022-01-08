@@ -57,7 +57,7 @@ import kotlin.collections.ArrayList
 
 class MapActivity : BaseActivity(), OnMapReadyCallback, OnLoadLocationListener,
     GeoQueryEventListener {
-
+//  TODO refactoring i wyczyszczenie kodu (i projektu)
     private var mShopDetail: Shop? = null
     private var mShopList: ArrayList<Shop>? = null
     private val GEOFENCE_LOCATION_REQUEST_CODE = 123
@@ -69,11 +69,10 @@ class MapActivity : BaseActivity(), OnMapReadyCallback, OnLoadLocationListener,
     private lateinit var locationCallback: LocationCallback
     private lateinit var fusedLocationProviderClient: FusedLocationProviderClient
     private lateinit var currentMarker: Marker
-    private var mShopLatLngList: MutableList<LatLng> = ArrayList()
+    private var mShopLatLngList: MutableList<Shop> = ArrayList()
     private var mLatLngList: MutableList<LatLng> = ArrayList()
     private lateinit var myLocationRef:DatabaseReference
     private lateinit var listener: OnLoadLocationListener
-    private var radius = 500.0
 
     private lateinit var myShop: DatabaseReference
     private lateinit var lastLocation: Location
@@ -174,11 +173,11 @@ class MapActivity : BaseActivity(), OnMapReadyCallback, OnLoadLocationListener,
     }
 
     override fun onLocationLoadSucces(latLngs: List<Shop>) {
-        mShopLatLngList = ArrayList()
-        for (myLatLng in latLngs) {
-            val convert = LatLng(myLatLng.latitude,myLatLng.longitude)
-            mShopLatLngList!!.add(convert)
-        }
+//        mShopLatLngList = ArrayList()
+//        for (myLatLng in latLngs) {
+//            val convert = LatLng(myLatLng.latitude,myLatLng.longitude)
+//            mShopLatLngList!!.add(convert)
+//        }
         val mapFragment = supportFragmentManager
             .findFragmentById(R.id.map) as SupportMapFragment
         mapFragment.getMapAsync(this)
@@ -196,21 +195,23 @@ class MapActivity : BaseActivity(), OnMapReadyCallback, OnLoadLocationListener,
             geoQuery!!.removeGeoQueryEventListener(this@MapActivity)
             geoQuery!!.removeAllListeners()
         }
-
-        Toast.makeText(this@MapActivity, "adasdasdasdasdasdasdasdasd",Toast.LENGTH_SHORT).show()
-
-        Toast.makeText(this@MapActivity, "mShopLatLngList: $mShopLatLngList",Toast.LENGTH_SHORT).show()
+//
+//        Toast.makeText(this@MapActivity, "adasdasdasdasdasdasdasdasd",Toast.LENGTH_SHORT).show()
+//
+//        Toast.makeText(this@MapActivity, "mShopLatLngList: $mShopLatLngList",Toast.LENGTH_SHORT).show()
 
         for (latLng in mShopLatLngList!!){
+            val center =  LatLng(latLng.latitude, latLng.longitude)
+            val radius = latLng.radius.toDouble()
             mMap!!.addCircle(CircleOptions()
-                .center(latLng)
+                .center(center)
                 .radius(radius)
                 .strokeColor(Color.BLUE)
                 .fillColor(0x220000FF)
                 .strokeWidth(5.0f))
 
-            geoQuery = geoFire!!.queryAtLocation(GeoLocation(latLng.latitude, latLng.longitude),0.5)
-            Toast.makeText(this@MapActivity, "geoQuery: $geoQuery",Toast.LENGTH_SHORT).show()
+            geoQuery = geoFire!!.queryAtLocation(GeoLocation(latLng.latitude, latLng.longitude),radius/1000)
+//            Toast.makeText(this@MapActivity, "geoQuery: $geoQuery",Toast.LENGTH_SHORT).show()
             geoQuery!!.addGeoQueryEventListener(this@MapActivity)
         }
 
@@ -256,17 +257,17 @@ class MapActivity : BaseActivity(), OnMapReadyCallback, OnLoadLocationListener,
     }
 
     fun GeofenceList(shopsLists : ArrayList<Shop>){
-
-//        val sLists: ArrayList<LatLng> = ArrayList()
-        for(i in shopsLists){
-//            val id = i.id
-            val location = LatLng(i.latitude, i.longitude)
-            Log.e(this.javaClass.simpleName, "GeofenceList location: $location")
-//            radius = i.radius.toDouble()
-            mShopLatLngList.add(location)
-//            sLists.add(location)
-            Log.e(this.javaClass.simpleName, "GeofenceList mShopLatLngList: ${mShopLatLngList}")
-        }
+        mShopLatLngList = shopsLists
+////        val sLists: ArrayList<LatLng> = ArrayList()
+//        for(i in shopsLists){
+////            val id = i.id
+//            val location = LatLng(i.latitude, i.longitude)
+//            Log.e(this.javaClass.simpleName, "GeofenceList location: $location")
+////            radius = i.radius.toDouble()
+//            mShopLatLngList.add(location)
+////            sLists.add(location)
+//            Log.e(this.javaClass.simpleName, "GeofenceList mShopLatLngList: ${mShopLatLngList}")
+//        }
         addCircleArea()
     }
 
@@ -355,7 +356,7 @@ class MapActivity : BaseActivity(), OnMapReadyCallback, OnLoadLocationListener,
     }
 
     override fun onKeyEntered(key: String?, location: GeoLocation?) {
-        sendNotification("ShoppingManagment", String.format("Znalazłeś się w strefie $key"))
+        sendNotification("ShoppingManagment", String.format("Znalazłeś się w strefie ${location.toString()}"))
     }
 
     override fun onKeyExited(key: String?) {
@@ -363,7 +364,7 @@ class MapActivity : BaseActivity(), OnMapReadyCallback, OnLoadLocationListener,
     }
 
     override fun onKeyMoved(key: String?, location: GeoLocation?) {
-        sendNotification("ShoppingManagment", String.format("poruszyłeś się $key"))
+        sendNotification("ShoppingManagment", String.format("poruszyłeś się ${location.toString()}"))
     }
 
     override fun onGeoQueryReady() {
